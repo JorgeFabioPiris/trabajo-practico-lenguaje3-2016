@@ -7,10 +7,13 @@ package py.edu.facitec.mec.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import py.edu.facitec.mec.model.Ciudad;
+import py.edu.facitec.mec.model.Cliente;
 import py.edu.facitec.mec.util.ConexionManager;
 
 /**
@@ -74,7 +77,7 @@ public class CiudadDaoImp implements CiudadDao{
     }
 
     @Override
-    public Ciudad buscartCiudadPorCodigo(int codigo) {
+    public Ciudad buscarPorCodigo(int codigo) {
         
         String sql = "SELECT nombre, iso, estado FROM public.ciudades WHERE codigo="+codigo+";";
         
@@ -157,6 +160,55 @@ public class CiudadDaoImp implements CiudadDao{
         }
         ConexionManager.desconectar();
         return ciudadList;
+    }
+
+    @Override
+    public List<Ciudad> buscarPorFiltro(String filtro) {
+
+        String sql = "SELECT codigo, nombre, iso "
+                + "FROM public.ciudades "
+                + "WHERE (nombre LIKE '%"+filtro+"%') "
+                + "or (iso LIKE '%"+filtro+"%');";
+        
+        List<Ciudad> lista = new ArrayList<>();
+        
+        System.out.println("SQL = " + sql);
+        
+        //abrir una conexion
+        ConexionManager.conectar();
+        
+        Ciudad ciudad = null;
+        
+        ResultSet rs;
+        
+        try {
+            //ejecutar sql
+            
+            rs = ConexionManager.st.executeQuery(sql);
+            
+            System.out.println("Ejecutando: "+sql);
+
+            
+            while (rs.next()) {
+                
+                ciudad = new Ciudad();
+                
+                ciudad.setCodigo(rs.getInt("codigo"));
+                ciudad.setNombre(rs.getString("nombre"));
+                ciudad.setIso(rs.getString("iso"));
+                
+                //Agregara a la lista
+                lista.add(ciudad);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al ejecutar "+ex);
+        }
+        //cerrar conexion
+        ConexionManager.desconectar();
+        
+        return lista;
     }
 
 }

@@ -24,22 +24,22 @@ public class ClienteControllerImpl implements ClienteController{
     }
     
     @Override
-    public void registrarCliente(Cliente cliente) {
+    public void registrar(Cliente cliente) {
         clienteDao.guardar(cliente);
     }
 
     @Override
-    public boolean modificarCliente(Cliente cliente) {
+    public boolean modificar(Cliente cliente) {
         return clienteDao.modificar(cliente);
     }
 
     @Override
-    public Cliente buscarClientePorCodigo(int codigo) {
+    public Cliente buscarPorCodigo(int codigo) {
         return clienteDao.buscarPorCodigo(codigo);
     }
 
     @Override
-    public List<Cliente> buscarClientePorFiltro(String busqueda) {
+    public List<Cliente> buscarPorFiltro(String busqueda) {
         return clienteDao.buscarPorFiltro(busqueda);
     }
 

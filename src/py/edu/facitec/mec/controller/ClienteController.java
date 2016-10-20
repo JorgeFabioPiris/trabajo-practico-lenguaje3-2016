@@ -13,9 +13,9 @@ import py.edu.facitec.mec.model.Cliente;
  * @author Jorge Fabio
  */
 public interface ClienteController {
-    void registrarCliente(Cliente cliente);
-    boolean modificarCliente(Cliente cliente);
-    Cliente buscarClientePorCodigo(int codigo);
-    List<Cliente> buscarClientePorFiltro(String busqueda);
+    void registrar(Cliente cliente);
+    boolean modificar(Cliente cliente);
+    Cliente buscarPorCodigo(int codigo);
+    List<Cliente> buscarPorFiltro(String busqueda);
     void eliminarCliente(int codigo);
 }

@@ -5,6 +5,7 @@
  */
 package py.edu.facitec.mec.controller;
 
+import java.util.List;
 import java.util.Vector;
 import py.edu.facitec.mec.model.Ciudad;
 
@@ -15,7 +16,8 @@ import py.edu.facitec.mec.model.Ciudad;
 public interface CiudadController {
     void registrar(Ciudad ciudad);
     boolean modificar(Ciudad ciudad);
-    Ciudad buscarCiudadPorCodigo(int codigo);
+    Ciudad buscarPorCodigo(int codigo);
     Vector<Ciudad> cargarComboBox();
+    List<Ciudad>buscarPorFiltro(String filtro);
     void eliminar(int codigo);
 }

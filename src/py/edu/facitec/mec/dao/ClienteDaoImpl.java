@@ -121,10 +121,16 @@ public class ClienteDaoImpl implements ClienteDao{
     @Override
     public List<Cliente> buscarPorFiltro(String filtro) {
         
+//        String sql = "SELECT codigo, nombres, apellidos, direccion, credito "
+//                + "FROM public.clientes WHERE nombres LIKE '%"+filtro+"'"
+//                + " or apellidos LIKE '"+filtro+"%'"
+//                + " or direccion LIKE '%"+filtro+"%';";
+        
         String sql = "SELECT codigo, nombres, apellidos, direccion, credito "
-                + "FROM public.clientes WHERE nombres LIKE = '%"+filtro+"'"
-                + " or apellidos LIKE '"+filtro+"%'"
-                + " or direccion = '%"+filtro+"%';";
+                + "FROM public.clientes "
+                + "WHERE (nombres LIKE '%"+filtro+"%') "
+                + "or (apellidos LIKE '%"+filtro+"%') "
+                + "or (direccion LIKE '%"+filtro+"%');";
         
         List<Cliente> lista = new ArrayList<>();
         
@@ -145,7 +151,7 @@ public class ClienteDaoImpl implements ClienteDao{
             System.out.println("Ejecutando: "+sql);
 
             
-            if (rs.next()) {
+            while (rs.next()) {
                 
                 cliente = new Cliente();
                 
