@@ -95,8 +95,6 @@ public class FormMovimiento extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        cmbSituacion = new javax.swing.JComboBox<>();
         btnGrabar = new javax.swing.JButton();
         btnAnular = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -246,10 +244,6 @@ public class FormMovimiento extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Situacion:");
-
-        cmbSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Cancelado" }));
-
         btnGrabar.setText("Grabar");
         btnGrabar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,10 +278,6 @@ public class FormMovimiento extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(cmbSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
                 .addComponent(btnGrabar)
                 .addGap(18, 18, 18)
                 .addComponent(btnAnular)
@@ -302,8 +292,6 @@ public class FormMovimiento extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cmbSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGrabar)
                     .addComponent(btnAnular)
                     .addComponent(jButton1)
@@ -582,7 +570,6 @@ public class FormMovimiento extends javax.swing.JFrame {
     private javax.swing.JButton btnGrabar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbCondicion;
-    private javax.swing.JComboBox<String> cmbSituacion;
     private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -592,7 +579,6 @@ public class FormMovimiento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -611,8 +597,7 @@ public class FormMovimiento extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void obtenerServicios() {
-        Servicio ser = new Servicio();
-        ser = serController.recuperarPorCodigo(Integer.parseInt(servCodigo.getText()));
+        Servicio ser = serController.recuperarPorCodigo(Integer.parseInt(servCodigo.getText()));
         if(ser!=null){
             servDescripcion.setText(ser.getDescripcion());
             servUnitario.setText(ser.getValor_unitario()+"");
@@ -680,7 +665,7 @@ public class FormMovimiento extends javax.swing.JFrame {
                 cmbCondicion.getSelectedItem().toString(), 
                 Double.parseDouble(tfImpoTotal.getText()), 
                 jTextArea1.getText(), 
-                cmbSituacion.getSelectedItem().toString());
+                "Activo");
         cabecera.registrar(mant);
     }
 
@@ -739,6 +724,7 @@ public class FormMovimiento extends javax.swing.JFrame {
 
     private void obtenerMovimiento() {
         
+        //Esta parte del codigo recupera la cabecera del movmiento
         Mantenimiento mant = cabecera.recuperarPorCodigo(Integer.parseInt(tfMovNro.getText()));
         fecha.setDate(mant.getFecha());
         cmbCondicion.setSelectedItem(mant.getCondicion());
@@ -747,10 +733,7 @@ public class FormMovimiento extends javax.swing.JFrame {
         tfCodClie.requestFocus();
         servCodigo.requestFocus();
         
-
-        
-        
-
+        //Esta parte del codigo recupera el detalle del movimiento y lo carga en la tabla
         String [] nombreColumnas = {"Codigo", "Nombre", "Cantidad", "P. Unitario", "Subtotal"};
 
         List<MantenimientoDetalle> mantDet = detalle.recuperarPorFiltro(3);
