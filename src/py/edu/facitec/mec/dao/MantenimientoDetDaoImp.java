@@ -7,9 +7,10 @@ package py.edu.facitec.mec.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import py.edu.facitec.mec.model.Mantenimiento;
 import py.edu.facitec.mec.model.MantenimientoDetalle;
 import py.edu.facitec.mec.util.ConexionManager;
 
@@ -80,9 +81,9 @@ public class MantenimientoDetDaoImp implements MantenimientoDetDao{
     @Override
     public MantenimientoDetalle recuperarPorCodigo(int codigo) {
         
-        String sql = "SELECT mantemiento_codigo, servicio_codigo, cantidad, precio, subtotal "
+        String sql = "SELECT servicio_codigo, cantidad, precio, subtotal "
                 + "FROM public.mantenimiento_detalles "
-                + "WHERE codigo="+codigo+";";
+                + "WHERE mantemiento_codigo="+codigo+";";
         
         //abrir una conexion
         ConexionManager.conectar();
@@ -99,7 +100,6 @@ public class MantenimientoDetDaoImp implements MantenimientoDetDao{
             
             if (rs.next()) {
                 mantDet = new MantenimientoDetalle();
-                mantDet.setMant_codigo(rs.getInt("mantenimiento_codigo"));
                 mantDet.setServ_codigo(rs.getInt("servicio_codigo"));
                 mantDet.setCantidad(rs.getDouble("cantidad"));
                 mantDet.setPrecio(rs.getDouble("precio"));
@@ -139,6 +139,48 @@ public class MantenimientoDetDaoImp implements MantenimientoDetDao{
 
         //cerrar conexion
         ConexionManager.desconectar();
+    }
+
+    @Override
+    public List<MantenimientoDetalle> recuperarPorFiltro(int codigo) {
+        
+        String sql = "SELECT servicio_codigo, cantidad, precio, subtotal "
+                + "FROM public.mantenimiento_detalles "
+                + "WHERE mantemiento_codigo="+codigo+";";
+        
+        //abrir una conexion
+        ConexionManager.conectar();
+        
+        List<MantenimientoDetalle> lista = new ArrayList<>();
+        
+        MantenimientoDetalle mantDet = null;
+        
+        ResultSet rs;
+        
+        try {
+            //ejecutar sql
+            
+            rs = ConexionManager.st.executeQuery(sql);
+            System.out.println("Ejecutando: "+sql);
+            
+            while (rs.next()) {
+                mantDet = new MantenimientoDetalle();
+                mantDet.setServ_codigo(rs.getInt("servicio_codigo"));
+                mantDet.setCantidad(rs.getDouble("cantidad"));
+                mantDet.setPrecio(rs.getDouble("precio"));
+                mantDet.setSubtotal(rs.getDouble("subtotal"));
+                lista.add(mantDet);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MantenimientoDetalle.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al ejecutar SQL: "+ex);
+
+        }
+        //cerrar conexion
+        ConexionManager.desconectar();
+        return lista;
+    
     }
 
     

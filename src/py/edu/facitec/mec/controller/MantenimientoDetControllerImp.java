@@ -44,5 +44,10 @@ public class MantenimientoDetControllerImp implements MantenimientoDetController
         movimientoDetDao.eliminar(codigo);
     }
 
+    @Override
+    public List<MantenimientoDetalle> recuperarPorFiltro(int codigo) {
+        return movimientoDetDao.recuperarPorFiltro(codigo);
+    }
+
 
 }

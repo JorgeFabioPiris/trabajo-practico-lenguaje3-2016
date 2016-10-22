@@ -8,6 +8,7 @@ package py.edu.facitec.mec.view.mov;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -239,6 +240,11 @@ public class FormMovimiento extends javax.swing.JFrame {
         });
 
         btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Situacion:");
 
@@ -517,6 +523,7 @@ public class FormMovimiento extends javax.swing.JFrame {
         if(tfMovNro.getText().isEmpty()){
             tfMovNro.setText(cabecera.obtenerMaximo()+"");
         }else{
+            obtenerMovimiento();
             fecha.requestFocus();
         }
     }//GEN-LAST:event_tfMovNroFocusLost
@@ -526,6 +533,10 @@ public class FormMovimiento extends javax.swing.JFrame {
             servCantidad.setText("1");
         }
     }//GEN-LAST:event_servCantidadFocusLost
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        eliminarFila();
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -708,5 +719,50 @@ public class FormMovimiento extends javax.swing.JFrame {
         modelo.addRow(fila);
 
         jTable1.setModel(modelo);
+    }
+
+    private void eliminarFila() {
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int a = jTable1.getSelectedRow();
+        if (a<0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla" );
+        }else {
+            int confirmar=JOptionPane.showConfirmDialog(null, "Esta seguro que desea Eliminar el registro? ");
+            if(JOptionPane.OK_OPTION==confirmar) {
+                model.removeRow(a);
+            }
+        }
+    }
+
+    private void obtenerMovimiento() {
+        
+        Mantenimiento mant = cabecera.recuperarPorCodigo(Integer.parseInt(tfMovNro.getText()));
+        fecha.setDate(mant.getFecha());
+        cmbCondicion.setSelectedItem(mant.getCondicion());
+        tfCodClie.setText(mant.getCodigo()+"");
+//        
+//        List<MantenimientoDetalle> mantDet = detalle.recuperarPorFiltro(Integer.parseInt(tfMovNro.getText()));
+//        
+//        for (int i = 0; i < mantDet.size(); i++) {
+//            
+//            Servicio ser = serController.recuperarPorCodigo(mantDet.get(i).getServ_codigo());
+//            
+//            Object [] fila = new Object[5];
+//            fila[0]=mantDet.get(i).getServ_codigo();
+//            fila[1]=ser.getNombre();
+//            fila[2]=mantDet.get(i).getCantidad();
+//            fila[3]=mantDet.get(i).getPrecio();
+//            Double can, uni, subtot;
+//            can = Double.parseDouble(servCantidad.getText());
+//            uni = Double.parseDouble(servUnitario.getText());
+//            subtot = can*uni;
+//            fila[4]=subtot;
+//            
+//            modelo.addRow(fila);
+//            
+//            jTable1.setModel(modelo);
+        
+//        }
     }
 }
