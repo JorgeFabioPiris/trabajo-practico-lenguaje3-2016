@@ -41,6 +41,7 @@ public class FormMovimiento extends javax.swing.JFrame {
     MantenimientoDetController detalle;
     
     static DefaultTableModel modelo;
+    Calendar dia = new GregorianCalendar();
     
     public FormMovimiento() {
         initComponents();
@@ -54,7 +55,6 @@ public class FormMovimiento extends javax.swing.JFrame {
         
         tfMovNro.requestFocus();
         
-        Calendar dia = new GregorianCalendar();
         fecha.setCalendar(dia);
     }
 
@@ -645,6 +645,7 @@ public class FormMovimiento extends javax.swing.JFrame {
         servDescripcion.setText("");
         servCantidad.setText("");
         servUnitario.setText("");
+        fecha.setCalendar(dia);
         
         //ciclo para limpiar la tabla
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -702,6 +703,21 @@ public class FormMovimiento extends javax.swing.JFrame {
         }
     }
 
+
+    private void eliminarFila() {
+        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int a = jTable1.getSelectedRow();
+        if (a<0){
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla" );
+        }else {
+            int confirmar=JOptionPane.showConfirmDialog(null, "Esta seguro que desea Eliminar el registro? ");
+            if(JOptionPane.OK_OPTION==confirmar) {
+                model.removeRow(a);
+            }
+        }
+    }
+
     private void cargarTabla() {
         
         Object [] fila=new Object[5];
@@ -721,48 +737,44 @@ public class FormMovimiento extends javax.swing.JFrame {
         jTable1.setModel(modelo);
     }
 
-    private void eliminarFila() {
-        
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        int a = jTable1.getSelectedRow();
-        if (a<0){
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila de la tabla" );
-        }else {
-            int confirmar=JOptionPane.showConfirmDialog(null, "Esta seguro que desea Eliminar el registro? ");
-            if(JOptionPane.OK_OPTION==confirmar) {
-                model.removeRow(a);
-            }
-        }
-    }
-
     private void obtenerMovimiento() {
         
         Mantenimiento mant = cabecera.recuperarPorCodigo(Integer.parseInt(tfMovNro.getText()));
         fecha.setDate(mant.getFecha());
         cmbCondicion.setSelectedItem(mant.getCondicion());
-        tfCodClie.setText(mant.getCodigo()+"");
-//        
-//        List<MantenimientoDetalle> mantDet = detalle.recuperarPorFiltro(Integer.parseInt(tfMovNro.getText()));
-//        
-//        for (int i = 0; i < mantDet.size(); i++) {
-//            
-//            Servicio ser = serController.recuperarPorCodigo(mantDet.get(i).getServ_codigo());
-//            
-//            Object [] fila = new Object[5];
-//            fila[0]=mantDet.get(i).getServ_codigo();
-//            fila[1]=ser.getNombre();
-//            fila[2]=mantDet.get(i).getCantidad();
-//            fila[3]=mantDet.get(i).getPrecio();
-//            Double can, uni, subtot;
-//            can = Double.parseDouble(servCantidad.getText());
-//            uni = Double.parseDouble(servUnitario.getText());
-//            subtot = can*uni;
-//            fila[4]=subtot;
-//            
-//            modelo.addRow(fila);
-//            
-//            jTable1.setModel(modelo);
+        tfCodClie.setText(mant.getCliente_codigo()+"");
+        jTextArea1.setText(mant.getObservacion());
+        tfCodClie.requestFocus();
+        servCodigo.requestFocus();
         
-//        }
+
+        
+        
+
+        String [] nombreColumnas = {"Codigo", "Nombre", "Cantidad", "P. Unitario", "Subtotal"};
+
+        List<MantenimientoDetalle> mantDet = detalle.recuperarPorFiltro(3);
+
+        Object[][] datos = new Object[mantDet.size()][nombreColumnas.length];
+
+        for (int i=0; i< mantDet.size(); i++){
+            
+            Servicio ser = serController.recuperarPorCodigo(mantDet.get(i).getServ_codigo());
+            datos[i][0]=mantDet.get(i).getServ_codigo();
+            datos[i][1]=ser.getNombre();
+            datos[i][2]=mantDet.get(i).getCantidad();
+            datos[i][3]=mantDet.get(i).getPrecio();
+            Double can, uni, subtot;
+            can = (mantDet.get(i).getCantidad());
+            uni = (mantDet.get(i).getPrecio());
+            subtot = can*uni;
+            datos[i][4]=subtot;
+            
+        }
+        
+        modelo = new DefaultTableModel(datos, nombreColumnas);
+        
+        this.jTable1.setModel(modelo);
+        
     }
 }
