@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import py.edu.facitec.mec.controller.ServiciosController;
 import py.edu.facitec.mec.controller.ServiciosControllerImp;
 import py.edu.facitec.mec.model.Cliente;
-import py.edu.facitec.mec.model.Servicios;
+import py.edu.facitec.mec.model.Servicio;
 
 /**
  *
@@ -234,7 +234,7 @@ public class FormServicios extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -248,14 +248,15 @@ public class FormServicios extends javax.swing.JFrame {
                             .addComponent(tfDescripcion)
                             .addComponent(tfVarlorUnitario)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbEstado)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnNuevo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnConsultar)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbEstado)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnNuevo)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnConsultar)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -499,7 +500,7 @@ private void consultarClientePorCodito(int codigo) {
         
         if (codigo != 0 ) {
             
-            Servicios servicio = servicioController.recuperarPorCodigo(codigo);
+            Servicio servicio = servicioController.recuperarPorCodigo(codigo);
             
             if (servicio != null) {
                 tfNombre.setText(servicio.getNombre());
@@ -525,7 +526,7 @@ private void consultarClientePorCodito(int codigo) {
     }
 
     private void guardar() {
-        Servicios serv = new Servicios(tfNombre.getText(), tfDescripcion.getText(), Double.parseDouble(tfVarlorUnitario.getText()), cbEstado.isSelected());
+        Servicio serv = new Servicio(tfNombre.getText(), tfDescripcion.getText(), Double.parseDouble(tfVarlorUnitario.getText()), cbEstado.isSelected());
         servicioController.insertar(serv);
         JOptionPane.showMessageDialog(this, "Servicio nuevo guardado con exito", "Aviso", 2);
         limpiar();
@@ -533,7 +534,7 @@ private void consultarClientePorCodito(int codigo) {
 
     private void modificar() {
         
-        Servicios serv = new Servicios(Integer.parseInt(tfCodigo.getText()), tfNombre.getText(), tfDescripcion.getText(), Double.parseDouble(tfVarlorUnitario.getText()), cbEstado.isSelected());
+        Servicio serv = new Servicio(Integer.parseInt(tfCodigo.getText()), tfNombre.getText(), tfDescripcion.getText(), Double.parseDouble(tfVarlorUnitario.getText()), cbEstado.isSelected());
         
         JOptionPane.showMessageDialog(this, "Servicio actualizado con exito", "Aviso", 1);
         

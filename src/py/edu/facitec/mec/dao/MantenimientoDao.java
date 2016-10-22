@@ -5,18 +5,17 @@
  */
 package py.edu.facitec.mec.dao;
 
-import java.util.List;
-import py.edu.facitec.mec.model.Servicios;
+import py.edu.facitec.mec.model.Mantenimiento;
 
 /**
  *
  * @author Jorge Fabio
  */
-public interface ServiciosDao {
-    
-    void insertar(Servicios serv);
-    void modificar(Servicios serv);
-    Servicios recuperarPorCodigo(int codigo);
-    List<Servicios> recuperarPorFiltro(String filtro);
+public interface MantenimientoDao {
+    void guardar(Mantenimiento mantenimiento);
+    boolean modificar(Mantenimiento mantenimiento);
+    Mantenimiento recuperarPorCodigo(int codigo); 
     void eliminar(int codigo);
+    int obtenerMaximo();
+    
 }

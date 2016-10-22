@@ -6,7 +6,7 @@
 package py.edu.facitec.mec.controller;
 
 import java.util.List;
-import py.edu.facitec.mec.model.Servicios;
+import py.edu.facitec.mec.model.Servicio;
 
 /**
  *
@@ -14,10 +14,10 @@ import py.edu.facitec.mec.model.Servicios;
  */
 public interface ServiciosController {
     
-    void insertar(Servicios serv);
-    void modificar(Servicios serv);
-    Servicios recuperarPorCodigo(int codigo);
-    List<Servicios> recuperarPorFiltro(String filtro);
+    void insertar(Servicio serv);
+    void modificar(Servicio serv);
+    Servicio recuperarPorCodigo(int codigo);
+    List<Servicio> recuperarPorFiltro(String filtro);
     void eliminar(int codigo);
     
 }

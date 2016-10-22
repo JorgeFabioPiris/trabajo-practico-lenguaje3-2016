@@ -78,7 +78,7 @@ public class ClienteDaoImpl implements ClienteDao{
     }
 
     @Override
-    public Cliente buscarPorCodigo(int codigo) {
+    public Cliente recuperarPorCodigo(int codigo) {
         
         String sql = "SELECT nombres, apellidos, direccion, ciudad_codigo, celular, credito, estado "
                 + "FROM public.clientes "
@@ -119,7 +119,7 @@ public class ClienteDaoImpl implements ClienteDao{
     }
 
     @Override
-    public List<Cliente> buscarPorFiltro(String filtro) {
+    public List<Cliente> recuperarPorFiltro(String filtro) {
         
 //        String sql = "SELECT codigo, nombres, apellidos, direccion, credito "
 //                + "FROM public.clientes WHERE nombres LIKE '%"+filtro+"'"

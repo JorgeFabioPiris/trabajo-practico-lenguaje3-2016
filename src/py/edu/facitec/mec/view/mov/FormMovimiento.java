@@ -5,6 +5,25 @@
  */
 package py.edu.facitec.mec.view.mov;
 
+import java.awt.event.KeyEvent;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import py.edu.facitec.mec.controller.ClienteController;
+import py.edu.facitec.mec.controller.ClienteControllerImpl;
+import py.edu.facitec.mec.controller.MantenimientoController;
+import py.edu.facitec.mec.controller.MantenimientoControllerImp;
+import py.edu.facitec.mec.controller.MantenimientoDetController;
+import py.edu.facitec.mec.controller.MantenimientoDetControllerImp;
+import py.edu.facitec.mec.controller.ServiciosController;
+import py.edu.facitec.mec.controller.ServiciosControllerImp;
+import py.edu.facitec.mec.model.Cliente;
+import py.edu.facitec.mec.model.Mantenimiento;
+import py.edu.facitec.mec.model.MantenimientoDetalle;
+import py.edu.facitec.mec.model.Servicio;
+
 /**
  *
  * @author Jorge Fabio
@@ -14,8 +33,28 @@ public class FormMovimiento extends javax.swing.JFrame {
     /**
      * Creates new form FormMovimiento
      */
+    
+    ServiciosController serController;
+    ClienteController clieController;
+    MantenimientoController cabecera;
+    MantenimientoDetController detalle;
+    
+    static DefaultTableModel modelo;
+    
     public FormMovimiento() {
         initComponents();
+
+        modelo = (DefaultTableModel) jTable1.getModel();
+
+        serController = new ServiciosControllerImp();
+        clieController = new ClienteControllerImpl();
+        cabecera = new MantenimientoControllerImp();
+        detalle = new MantenimientoDetControllerImp();
+        
+        tfMovNro.requestFocus();
+        
+        Calendar dia = new GregorianCalendar();
+        fecha.setCalendar(dia);
     }
 
     /**
@@ -28,26 +67,39 @@ public class FormMovimiento extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tfMovNro = new javax.swing.JTextField();
+        fecha = new com.toedter.calendar.JDateChooser();
+        cmbCondicion = new javax.swing.JComboBox<>();
+        tfCodClie = new javax.swing.JTextField();
+        tfNombClie = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        tfImpoTotal = new javax.swing.JTextField();
+        servCodigo = new javax.swing.JTextField();
+        servDescripcion = new javax.swing.JTextField();
+        servCantidad = new javax.swing.JTextField();
+        servUnitario = new javax.swing.JTextField();
+        btnBuscarClie = new javax.swing.JButton();
+        btnBuscarSer = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        cmbSituacion = new javax.swing.JComboBox<>();
+        btnGrabar = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,59 +109,199 @@ public class FormMovimiento extends javax.swing.JFrame {
 
         jLabel3.setText("Cliente:");
 
-        jTextField3.setEditable(false);
-
         jLabel4.setText("Condición:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contado", "Credito" }));
+        tfMovNro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfMovNroFocusLost(evt);
+            }
+        });
+        tfMovNro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfMovNroKeyPressed(evt);
+            }
+        });
+
+        fecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fechaKeyPressed(evt);
+            }
+        });
+
+        cmbCondicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contado", "Credito" }));
+        cmbCondicion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cmbCondicionKeyPressed(evt);
+            }
+        });
+
+        tfCodClie.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfCodClieFocusLost(evt);
+            }
+        });
+        tfCodClie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfCodClieKeyPressed(evt);
+            }
+        });
+
+        tfNombClie.setEditable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Servicio", "Cantidad", "P. Unitario", "Subtotal"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         jLabel5.setText("Importe Total:");
+
+        jLabel6.setText("Observacion:");
+
+        jLabel8.setText("Servicio:");
+
+        jLabel9.setText("Cantidad");
+
+        jLabel10.setText("P. Unitario");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        jLabel6.setText("Observacion:");
+        servCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                servCodigoFocusLost(evt);
+            }
+        });
+        servCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                servCodigoKeyPressed(evt);
+            }
+        });
+
+        servDescripcion.setEditable(false);
+
+        servCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                servCantidadFocusLost(evt);
+            }
+        });
+        servCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                servCantidadKeyPressed(evt);
+            }
+        });
+
+        servUnitario.setEditable(false);
+
+        btnBuscarClie.setText("Buscar");
+        btnBuscarClie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClieActionPerformed(evt);
+            }
+        });
+        btnBuscarClie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarClieKeyPressed(evt);
+            }
+        });
+
+        btnBuscarSer.setText("Buscar");
+        btnBuscarSer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarSerActionPerformed(evt);
+            }
+        });
+        btnBuscarSer.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarSerKeyPressed(evt);
+            }
+        });
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnBorrar.setText("Borrar");
 
         jLabel7.setText("Situacion:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Cancelado" }));
+        cmbSituacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Cancelado" }));
 
-        jButton1.setText("jButton1");
+        btnGrabar.setText("Grabar");
+        btnGrabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGrabarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("jButton2");
+        btnAnular.setText("Anular");
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularActionPerformed(evt);
+            }
+        });
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Limpiar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(134, 134, 134)
-                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cmbSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(btnGrabar)
+                .addGap(18, 18, 18)
+                .addComponent(btnAnular)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSalir)
+                .addGap(3, 3, 3))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(cmbSituacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGrabar)
+                    .addComponent(btnAnular)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnSalir))
                 .addGap(35, 35, 35))
         );
 
@@ -122,39 +314,62 @@ public class FormMovimiento extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel6))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBuscarSer)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(servCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(servDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(servCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel10))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(servUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnAceptar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnBorrar)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tfImpoTotal))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(tfMovNro, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(98, 98, 98)
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cmbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscarClie)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfCodClie, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNombClie, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6))
+                        .addGap(0, 11, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -162,38 +377,155 @@ public class FormMovimiento extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfMovNro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfCodClie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNombClie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarClie))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
+                    .addComponent(tfImpoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(servCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarSer)
+                    .addComponent(servDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(servCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(servUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnBorrar))
+                .addGap(24, 24, 24)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnularActionPerformed
+
+    private void btnBuscarSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarSerActionPerformed
+        FormServiciosConsulta cons = new FormServiciosConsulta(this, rootPaneCheckingEnabled);
+        servCodigo.requestFocus();
+        cons.setVisible(true);
+    }//GEN-LAST:event_btnBuscarSerActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+
+        if(servCodigo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Debe ingresar el codigo de un servicio", "Aviso", 1);
+            servCodigo.requestFocus();
+        }else{
+            cargarTabla(); sumarColumnasTabla(); limpiarCamposServicioDetalle();            
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void servCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_servCodigoFocusLost
+        if (servCodigo.getText().isEmpty()) {
+            
+        }else{
+            obtenerServicios();
+        }
+    }//GEN-LAST:event_servCodigoFocusLost
+
+    private void btnBuscarClieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClieActionPerformed
+        FormClienteConsulta consulta = new FormClienteConsulta(this, rootPaneCheckingEnabled);
+        consulta.setVisible(true);
+    }//GEN-LAST:event_btnBuscarClieActionPerformed
+
+    private void tfCodClieFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCodClieFocusLost
+        Cliente clie = clieController.recuperarPorCodigo(Integer.parseInt(tfCodClie.getText()));
+        if (clie!=null) {
+            tfNombClie.setText(clie.getNombres()+" "+clie.getApellidos());            
+        }else{
+            JOptionPane.showMessageDialog(this, "No existe este cliente", "Aviso", 1);
+            tfCodClie.requestFocus();
+            tfCodClie.setText("");
+        }
+    }//GEN-LAST:event_tfCodClieFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        limpiar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tfMovNroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfMovNroKeyPressed
+        moverConEnter(evt, fecha);
+    }//GEN-LAST:event_tfMovNroKeyPressed
+
+    private void fechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaKeyPressed
+        moverConEnter(evt, cmbCondicion);
+    }//GEN-LAST:event_fechaKeyPressed
+
+    private void cmbCondicionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmbCondicionKeyPressed
+        moverConEnter(evt, btnBuscarClie);
+    }//GEN-LAST:event_cmbCondicionKeyPressed
+
+    private void btnBuscarClieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarClieKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarClieKeyPressed
+
+    private void tfCodClieKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCodClieKeyPressed
+        moverConEnter(evt, btnBuscarSer);
+    }//GEN-LAST:event_tfCodClieKeyPressed
+
+    private void btnBuscarSerKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarSerKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarSerKeyPressed
+
+    private void servCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_servCodigoKeyPressed
+        moverConEnter(evt, servCantidad);
+    }//GEN-LAST:event_servCodigoKeyPressed
+
+    private void servCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_servCantidadKeyPressed
+        moverConEnter(evt, btnAceptar);
+    }//GEN-LAST:event_servCantidadKeyPressed
+
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
+        guardarMantenimiento();
+        guardarDetalle();
+        limpiar();
+    }//GEN-LAST:event_btnGrabarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void tfMovNroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfMovNroFocusLost
+        if(tfMovNro.getText().isEmpty()){
+            tfMovNro.setText(cabecera.obtenerMaximo()+"");
+        }else{
+            fecha.requestFocus();
+        }
+    }//GEN-LAST:event_tfMovNroFocusLost
+
+    private void servCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_servCantidadFocusLost
+        if (servCantidad.getText().isEmpty()) {
+            servCantidad.setText("1");
+        }
+    }//GEN-LAST:event_servCantidadFocusLost
 
     /**
      * @param args the command line arguments
@@ -231,26 +563,150 @@ public class FormMovimiento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnAnular;
+    private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnBuscarClie;
+    private javax.swing.JButton btnBuscarSer;
+    private javax.swing.JButton btnGrabar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cmbCondicion;
+    private javax.swing.JComboBox<String> cmbSituacion;
+    private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField servCantidad;
+    public static javax.swing.JTextField servCodigo;
+    private javax.swing.JTextField servDescripcion;
+    private javax.swing.JTextField servUnitario;
+    public static javax.swing.JTextField tfCodClie;
+    private javax.swing.JTextField tfImpoTotal;
+    private javax.swing.JTextField tfMovNro;
+    private javax.swing.JTextField tfNombClie;
     // End of variables declaration//GEN-END:variables
+
+    private void obtenerServicios() {
+        Servicio ser = new Servicio();
+        ser = serController.recuperarPorCodigo(Integer.parseInt(servCodigo.getText()));
+        if(ser!=null){
+            servDescripcion.setText(ser.getDescripcion());
+            servUnitario.setText(ser.getValor_unitario()+"");
+        }else{
+            JOptionPane.showMessageDialog(this, "No existe este serivcio", "Aviso", 1);
+            servCodigo.setText("");
+            servCodigo.requestFocus();
+        }
+        
+        
+    }
+
+    private void limpiarCamposServicioDetalle() { // Limpia los campos donde se cargan los servicios
+        servCodigo.requestFocus();
+        servCodigo.setText("");
+        servDescripcion.setText("");
+        servCantidad.setText("");
+        servUnitario.setText("");
+    }
+
+    private void limpiar() {
+        
+        tfMovNro.requestFocus();
+        tfMovNro.setText("");
+        cmbCondicion.setSelectedIndex(0);
+        tfCodClie.setText("");
+        tfNombClie.setText("");
+        tfImpoTotal.setText("");
+        servCodigo.setText("");
+        servDescripcion.setText("");
+        servCantidad.setText("");
+        servUnitario.setText("");
+        
+        //ciclo para limpiar la tabla
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+           modelo.removeRow(i);
+           i-=1;
+       }
+    }
+    
+    private void moverConEnter(java.awt.event.KeyEvent evt, JComponent source) {
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            source.requestFocus();
+        }
+    }
+
+    private void guardarDetalle() {
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            MantenimientoDetalle det = new MantenimientoDetalle();
+            det.setMant_codigo(Integer.parseInt(tfMovNro.getText()));
+            det.setServ_codigo(Integer.parseInt(jTable1.getValueAt(i, 0).toString()));
+            det.setCantidad(Double.parseDouble(jTable1.getValueAt(i, 2).toString()));
+            det.setPrecio(Double.parseDouble(jTable1.getValueAt(i, 3).toString()));
+            det.setSubtotal(Double.parseDouble(jTable1.getValueAt(i, 4).toString()));
+            detalle.registrar(det);
+            
+        }
+    }
+
+    private void guardarMantenimiento() {
+        Mantenimiento mant = new Mantenimiento(
+                fecha.getDate(), 
+                Integer.parseInt(tfCodClie.getText()), 
+                cmbCondicion.getSelectedItem().toString(), 
+                Double.parseDouble(tfImpoTotal.getText()), 
+                jTextArea1.getText(), 
+                cmbSituacion.getSelectedItem().toString());
+        cabecera.registrar(mant);
+    }
+
+    private void sumarColumnasTabla() {
+        
+        double sumatoria1=0.0;
+
+        int totalRow= jTable1.getRowCount();
+
+        totalRow-=1;
+
+        for(int i=0;i<=(totalRow);i++){
+            
+            double sumatoria= Double.parseDouble(String.valueOf(jTable1.getValueAt(i,4)));
+//en la parte de arriba indica el primer parametro la fila y el segundo la columna la cual estaras //manejando
+
+            sumatoria1+=sumatoria;
+            
+            tfImpoTotal.setText(sumatoria1+"");
+        }
+    }
+
+    private void cargarTabla() {
+        
+        Object [] fila=new Object[5];
+
+        fila[0]=servCodigo.getText();
+        fila[1]=servDescripcion.getText();
+        fila[2]=servCantidad.getText();
+        fila[3]=servUnitario.getText();
+        Double can, uni, subtot;
+        can = Double.parseDouble(servCantidad.getText());
+        uni = Double.parseDouble(servUnitario.getText());
+        subtot = can*uni;
+        fila[4]=subtot;
+        
+        modelo.addRow(fila);
+
+        jTable1.setModel(modelo);
+    }
 }

@@ -15,6 +15,7 @@ import py.edu.facitec.mec.controller.CiudadControllerImp;
 import py.edu.facitec.mec.controller.ClienteController;
 import py.edu.facitec.mec.controller.ClienteControllerImpl;
 import py.edu.facitec.mec.model.Ciudad;
+import py.edu.facitec.mec.view.mov.FormMovimiento;
 
 /**
  *
@@ -268,7 +269,7 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
         
         String [] nombreColumnas = {"Codigo", "Nombre", "ISO"};
 
-        List<Ciudad> listaCiudad = controller.buscarPorFiltro(tfBusqueda.getText());
+        List<Ciudad> listaCiudad = controller.recuperarPorFiltro(tfBusqueda.getText());
 
         Object[][] datos = new Object[listaCiudad.size()][nombreColumnas.length];
 

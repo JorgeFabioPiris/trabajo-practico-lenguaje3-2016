@@ -9,7 +9,7 @@ package py.edu.facitec.mec.model;
  *
  * @author Jorge Fabio
  */
-public class Servicios {
+public class Servicio {
     
     private int codigo;
     private String nombre;
@@ -17,7 +17,7 @@ public class Servicios {
     private Double valor_unitario;
     private boolean estado;
 
-    public Servicios() {
+    public Servicio() {
         this.codigo = 0;
         this.nombre = "";
         this.descripcion = "";
@@ -25,14 +25,14 @@ public class Servicios {
         this.estado = false;
     }
 
-    public Servicios(String nombre, String descripcion, Double valor_unitario, boolean estado) {
+    public Servicio(String nombre, String descripcion, Double valor_unitario, boolean estado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.valor_unitario = valor_unitario;
         this.estado = estado;
     }
 
-    public Servicios(int codigo, String nombre, String descripcion, Double valor_unitario, boolean estado) {
+    public Servicio(int codigo, String nombre, String descripcion, Double valor_unitario, boolean estado) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;

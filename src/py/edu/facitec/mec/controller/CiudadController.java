@@ -16,8 +16,8 @@ import py.edu.facitec.mec.model.Ciudad;
 public interface CiudadController {
     void registrar(Ciudad ciudad);
     boolean modificar(Ciudad ciudad);
-    Ciudad buscarPorCodigo(int codigo);
+    Ciudad recuperarPorCodigo(int codigo);
     Vector<Ciudad> cargarComboBox();
-    List<Ciudad>buscarPorFiltro(String filtro);
+    List<Ciudad>recuperarPorFiltro(String filtro);
     void eliminar(int codigo);
 }

@@ -6,16 +6,12 @@
 package py.edu.facitec.mec.view.abm;
 
 import java.awt.event.KeyEvent;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import py.edu.facitec.mec.controller.CiudadController;
 import py.edu.facitec.mec.controller.CiudadControllerImp;
-import py.edu.facitec.mec.controller.ClienteController;
-import py.edu.facitec.mec.controller.ClienteControllerImpl;
 import py.edu.facitec.mec.model.Ciudad;
-import py.edu.facitec.mec.model.Cliente;
 
 /**
  *
@@ -70,7 +66,7 @@ public class FormCiudad extends javax.swing.JFrame {
         btnConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Clientes");
+        setTitle("Ciudades");
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -223,7 +219,7 @@ public class FormCiudad extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -235,14 +231,15 @@ public class FormCiudad extends javax.swing.JFrame {
                             .addComponent(tfNombre)
                             .addComponent(tfIso)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbEstado)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnNuevo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnConsultar)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbEstado)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnNuevo)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnConsultar)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -468,7 +465,7 @@ private void consultarClientePorCodito(int codigo) {
         
         if (codigo != 0 ) {
             
-            Ciudad ciudad = ciudadController.buscarPorCodigo(codigo);
+            Ciudad ciudad = ciudadController.recuperarPorCodigo(codigo);
             
             if (ciudad != null) {
                 tfNombre.setText(ciudad.getNombre());

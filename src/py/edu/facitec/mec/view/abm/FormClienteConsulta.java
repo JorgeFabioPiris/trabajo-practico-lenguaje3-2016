@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import py.edu.facitec.mec.controller.ClienteController;
 import py.edu.facitec.mec.controller.ClienteControllerImpl;
 import py.edu.facitec.mec.model.Cliente;
-import py.edu.facitec.mec.view.abm.FormCliente;
 
 /**
  *
@@ -52,6 +51,7 @@ public class FormClienteConsulta extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consulta de Clientes");
 
         tfBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -259,7 +259,7 @@ public class FormClienteConsulta extends javax.swing.JFrame {
         
         String [] nombreColumnas = {"Codigo", "Nombre", "Apellido"};
 
-        List<Cliente> listaCliente = controller.buscarPorFiltro(tfBusqueda.getText());
+        List<Cliente> listaCliente = controller.recuperarPorFiltro(tfBusqueda.getText());
 
         Object[][] datos = new Object[listaCliente.size()][nombreColumnas.length];
 

@@ -11,19 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import py.edu.facitec.mec.model.Servicios;
+import py.edu.facitec.mec.model.Servicio;
 import py.edu.facitec.mec.util.ConexionManager;
 
 /**
  *
  * @author Jorge Fabio
  */
-public class ServiciosDaoImp implements ServiciosDao{
+public class ServicioDaoImp implements ServicioDao{
     
     private String sql;
     
     @Override
-    public void insertar(Servicios serv) {
+    public void insertar(Servicio serv) {
         
         sql = "INSERT INTO public.servicio"
                 + "(nombre, descripcion, valor_unitario, estado) "
@@ -36,7 +36,7 @@ public class ServiciosDaoImp implements ServiciosDao{
             ConexionManager.st.execute(sql);
             System.out.println("SQL "+sql);
         } catch (SQLException ex) {
-            Logger.getLogger(ServiciosDaoImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioDaoImp.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error al ejecutar sql "+ex);
         }
         
@@ -45,7 +45,7 @@ public class ServiciosDaoImp implements ServiciosDao{
     }
 
     @Override
-    public void modificar(Servicios serv) {
+    public void modificar(Servicio serv) {
         
         sql = "UPDATE public.servicio "
                 + "SET nombre='"+serv.getNombre()+"', descripcion='"+serv.getDescripcion()+"', "
@@ -58,7 +58,7 @@ public class ServiciosDaoImp implements ServiciosDao{
             ConexionManager.st.execute(sql);
             System.out.println("SQL "+sql);
         } catch (SQLException ex) {
-            Logger.getLogger(ServiciosDaoImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioDaoImp.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error al ejecutar sql "+ex);
         }
         
@@ -67,13 +67,13 @@ public class ServiciosDaoImp implements ServiciosDao{
     }
 
     @Override
-    public Servicios recuperarPorCodigo(int codigo) {
+    public Servicio recuperarPorCodigo(int codigo) {
         
         sql = "SELECT nombre, descripcion, valor_unitario, estado "
                 + "FROM public.servicio "
                 + "WHERE codigo="+codigo+";";
         
-        Servicios servicio = null;
+        Servicio servicio = null;
         
         ConexionManager.conectar();
         
@@ -82,7 +82,7 @@ public class ServiciosDaoImp implements ServiciosDao{
             System.out.println("SQL "+sql);
             
             if (rs.next()) {
-                servicio = new Servicios();
+                servicio = new Servicio();
                 servicio.setNombre(rs.getString("nombre"));
                 servicio.setDescripcion(rs.getString("descripcion"));
                 servicio.setValor_unitario(rs.getDouble("valor_unitario"));
@@ -90,7 +90,7 @@ public class ServiciosDaoImp implements ServiciosDao{
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(ServiciosDaoImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioDaoImp.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error al ejecutar sql "+ex);
         }
         
@@ -100,13 +100,13 @@ public class ServiciosDaoImp implements ServiciosDao{
     }
 
     @Override
-    public List<Servicios> recuperarPorFiltro(String filtro) {
+    public List<Servicio> recuperarPorFiltro(String filtro) {
         
-        List<Servicios> lista = new ArrayList<>();
+        List<Servicio> lista = new ArrayList<>();
         
         sql = "SELECT codigo, nombre, descripcion, valor_unitario, estado FROM public.servicio;";
         
-        Servicios servicio = null;
+        Servicio servicio = null;
         
         ConexionManager.conectar();
         
@@ -115,7 +115,7 @@ public class ServiciosDaoImp implements ServiciosDao{
             System.out.println("SQL "+sql);
             
             while(rs.next()) {
-                servicio = new Servicios();
+                servicio = new Servicio();
                 servicio.setCodigo(rs.getInt("codigo"));
                 servicio.setNombre(rs.getString("nombre"));
                 servicio.setDescripcion(rs.getString("descripcion"));
@@ -125,7 +125,7 @@ public class ServiciosDaoImp implements ServiciosDao{
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(ServiciosDaoImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioDaoImp.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error al ejecutar sql "+ex);
         }
         
@@ -144,7 +144,7 @@ public class ServiciosDaoImp implements ServiciosDao{
             ConexionManager.st.execute(sql);
             System.out.println("SQL "+sql);
         } catch (SQLException ex) {
-            Logger.getLogger(ServiciosDaoImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServicioDaoImp.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error al ejecutar sql "+ex);
         }
         

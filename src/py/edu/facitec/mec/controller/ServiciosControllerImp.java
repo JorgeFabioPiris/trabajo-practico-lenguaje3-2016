@@ -6,9 +6,9 @@
 package py.edu.facitec.mec.controller;
 
 import java.util.List;
-import py.edu.facitec.mec.dao.ServiciosDao;
-import py.edu.facitec.mec.dao.ServiciosDaoImp;
-import py.edu.facitec.mec.model.Servicios;
+import py.edu.facitec.mec.dao.ServicioDaoImp;
+import py.edu.facitec.mec.model.Servicio;
+import py.edu.facitec.mec.dao.ServicioDao;
 
 /**
  *
@@ -16,25 +16,25 @@ import py.edu.facitec.mec.model.Servicios;
  */
 public class ServiciosControllerImp implements ServiciosController{
     
-    ServiciosDao servDao = new ServiciosDaoImp();
+    ServicioDao servDao = new ServicioDaoImp();
 
     @Override
-    public void insertar(Servicios serv) {
+    public void insertar(Servicio serv) {
         servDao.insertar(serv);
     }
 
     @Override
-    public void modificar(Servicios serv) {
+    public void modificar(Servicio serv) {
         servDao.modificar(serv);
     }
 
     @Override
-    public Servicios recuperarPorCodigo(int codigo) {
+    public Servicio recuperarPorCodigo(int codigo) {
         return servDao.recuperarPorCodigo(codigo);
     }
 
     @Override
-    public List<Servicios> recuperarPorFiltro(String filtro) {
+    public List<Servicio> recuperarPorFiltro(String filtro) {
         return servDao.recuperarPorFiltro(filtro);
     }
 

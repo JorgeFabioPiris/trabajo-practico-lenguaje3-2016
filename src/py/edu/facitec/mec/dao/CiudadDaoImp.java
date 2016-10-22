@@ -13,7 +13,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import py.edu.facitec.mec.model.Ciudad;
-import py.edu.facitec.mec.model.Cliente;
 import py.edu.facitec.mec.util.ConexionManager;
 
 /**
@@ -77,7 +76,7 @@ public class CiudadDaoImp implements CiudadDao{
     }
 
     @Override
-    public Ciudad buscarPorCodigo(int codigo) {
+    public Ciudad recuperarPorCodigo(int codigo) {
         
         String sql = "SELECT nombre, iso, estado FROM public.ciudades WHERE codigo="+codigo+";";
         
@@ -163,12 +162,13 @@ public class CiudadDaoImp implements CiudadDao{
     }
 
     @Override
-    public List<Ciudad> buscarPorFiltro(String filtro) {
+    public List<Ciudad> recuperarPorFiltro(String filtro) {
 
         String sql = "SELECT codigo, nombre, iso "
                 + "FROM public.ciudades "
                 + "WHERE (nombre LIKE '%"+filtro+"%') "
-                + "or (iso LIKE '%"+filtro+"%');";
+                + "or (iso LIKE '%"+filtro+"%')"
+                + "ORDER BY codigo;";
         
         List<Ciudad> lista = new ArrayList<>();
         

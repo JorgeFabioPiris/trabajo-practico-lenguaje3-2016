@@ -30,8 +30,8 @@ public class CiudadControllerImp implements CiudadController{
     }
 
     @Override
-    public Ciudad buscarPorCodigo(int codigo) {
-        return ciudadDao.buscarPorCodigo(codigo);
+    public Ciudad recuperarPorCodigo(int codigo) {
+        return ciudadDao.recuperarPorCodigo(codigo);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class CiudadControllerImp implements CiudadController{
     }
 
     @Override
-    public List<Ciudad> buscarPorFiltro(String filtro) {
-        return ciudadDao.buscarPorFiltro(filtro);
+    public List<Ciudad> recuperarPorFiltro(String filtro) {
+        return ciudadDao.recuperarPorFiltro(filtro);
     }
 }

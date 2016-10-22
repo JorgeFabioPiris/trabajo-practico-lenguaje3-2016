@@ -34,13 +34,13 @@ public class ClienteControllerImpl implements ClienteController{
     }
 
     @Override
-    public Cliente buscarPorCodigo(int codigo) {
-        return clienteDao.buscarPorCodigo(codigo);
+    public Cliente recuperarPorCodigo(int codigo) {
+        return clienteDao.recuperarPorCodigo(codigo);
     }
 
     @Override
-    public List<Cliente> buscarPorFiltro(String busqueda) {
-        return clienteDao.buscarPorFiltro(busqueda);
+    public List<Cliente> recuperarPorFiltro(String busqueda) {
+        return clienteDao.recuperarPorFiltro(busqueda);
     }
 
     @Override
