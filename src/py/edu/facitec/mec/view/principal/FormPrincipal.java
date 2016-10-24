@@ -19,6 +19,9 @@ public class FormPrincipal extends javax.swing.JFrame {
      */
     public FormPrincipal() {
         initComponents();
+        
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -31,6 +34,12 @@ public class FormPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -41,19 +50,30 @@ public class FormPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventana Principal");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/aceptar2.png"))); // NOI18N
-        jButton1.setText("Cliente");
-        jButton1.setAutoscrolls(true);
-        jButton1.setIconTextGap(-3);
-        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/aceptar3.png"))); // NOI18N
-        jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/aceptar1.png"))); // NOI18N
-        jButton1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/Boton1.png"))); // NOI18N
+        jButton1.setText("jButton1");
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/Boton2.png"))); // NOI18N
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/Boton3.png"))); // NOI18N
+        jButton3.setText("jButton3");
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/Boton4.png"))); // NOI18N
+        jButton4.setText("jButton4");
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/Boton5.png"))); // NOI18N
+        jButton5.setText("jButton5");
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/py/edu/facitec/mec/Imagenes/Boton6.png"))); // NOI18N
+        jButton6.setText("jButton6");
+
+        jButton7.setText("jButton7");
 
         jMenu1.setText("Archivo");
 
@@ -91,16 +111,40 @@ public class FormPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jButton1)
-                .addContainerGap(658, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jButton1)
+                            .addGap(18, 18, 18)
+                            .addComponent(jButton4))
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jButton3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton5)
+                    .addComponent(jButton6)
+                    .addComponent(jButton7))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jButton1)
-                .addContainerGap(475, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton4))
+                    .addComponent(jButton5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jButton7))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
@@ -116,11 +160,9 @@ public class FormPrincipal extends javax.swing.JFrame {
         ventanaCiudad.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        FormCliente ventanaCliente = new FormCliente(this, rootPaneCheckingEnabled);
-        ventanaCliente.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,6 +201,12 @@ public class FormPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

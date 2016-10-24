@@ -239,6 +239,7 @@ public class FormMovimiento extends javax.swing.JFrame {
         panelButton2.setLayout(new java.awt.GridLayout(1, 0));
 
         btnGrabar.setText("Guardar");
+        btnGrabar.setEnabled(false);
         btnGrabar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGrabarActionPerformed(evt);
@@ -341,6 +342,7 @@ public class FormMovimiento extends javax.swing.JFrame {
         });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(204, 0, 51));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -523,9 +525,6 @@ public class FormMovimiento extends javax.swing.JFrame {
             guardarDetalle();
             estadoInsercion();
             limpiar();            
-        }else{
-            tfMovNro.requestFocus();
-            tfMovNro.setText("");
         }
     }//GEN-LAST:event_btnGrabarActionPerformed
 
@@ -545,7 +544,6 @@ public class FormMovimiento extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiar();
-        estadoInsercion();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -629,6 +627,7 @@ public class FormMovimiento extends javax.swing.JFrame {
     private void tfMovNroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfMovNroFocusLost
         if(tfMovNro.getText().isEmpty()){
             tfMovNro.setText(cabecera.obtenerMaximo()+"");
+            estadoInsercion();
         }else{
             obtenerMovimiento();
         }
@@ -822,6 +821,8 @@ public class FormMovimiento extends javax.swing.JFrame {
 
     private void limpiar() {
         tfMovNro.requestFocus();
+        tfMovNro.setEnabled(true);
+        tfMovNro.setEditable(true);
         tfMovNro.setText("");
         cmbCondicion.setSelectedIndex(0);
         tfCodClie.setText("");
@@ -832,6 +833,9 @@ public class FormMovimiento extends javax.swing.JFrame {
         servCantidad.setText("");
         servUnitario.setText("");
         fecha.setCalendar(dia);
+        btnGrabar.setEnabled(false);
+        btnAnular.setEnabled(false);
+        jLabel13.setText("");
         
         //ciclo para limpiar la tabla
         for (int i = 0; i < jTable1.getRowCount(); i++) {
@@ -972,8 +976,10 @@ public class FormMovimiento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se puede grabar un movimiento sin numero");
             tfMovNro.requestFocus();
         }else if (tfCodClie.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se puede grabar un movimiento sin numero");
+            JOptionPane.showMessageDialog(this, "No se puede grabar un movimiento sin un cliente");
             tfCodClie.requestFocus();
+        }else{
+            validar = true;
         }
         return validar;
     }

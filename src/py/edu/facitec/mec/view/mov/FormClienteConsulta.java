@@ -5,7 +5,6 @@
  */
 package py.edu.facitec.mec.view.mov;
 
-import py.edu.facitec.mec.view.abm.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JButton;
