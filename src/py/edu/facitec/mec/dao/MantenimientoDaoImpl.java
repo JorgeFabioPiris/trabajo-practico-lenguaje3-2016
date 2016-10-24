@@ -45,38 +45,6 @@ public class MantenimientoDaoImpl implements MantenimientoDao{
     }
 
     @Override
-    public boolean modificar(Mantenimiento mant) {
-        
-        String sql = "UPDATE public.mantenimiento "
-                + "SET fecha='"+mant.getFecha()+"', cliente_codigo="+mant.getCliente_codigo()+", condicion='"+mant.getCondicion()+"', "
-                + "importe_total="+mant.getImporte_total()+", observacion='"+mant.getObservacion()+"', situacion='"+mant.getSituacion()+"' "
-                + "WHERE codigo="+mant.getCodigo()+";";
-        
-        boolean resultado = false;
-        
-        //abrir una conexion
-        ConexionManager.conectar();
-
-        try {
-            //ejecutar sql
-            resultado = ConexionManager.st.execute(sql);
-            System.out.println("Ejecutando: "+sql);
-            
-        } catch (SQLException ex) {
-            
-            Logger.getLogger(MantenimientoDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error al ejecutar "+ ex);
-            
-        }
-
-        //cerrar conexion
-        ConexionManager.desconectar();
-        
-        return resultado;
-
-    }
-
-    @Override
     public Mantenimiento recuperarPorCodigo(int codigo) {
         
         String sql = "SELECT fecha, cliente_codigo, condicion, importe_total, observacion, situacion "
@@ -117,8 +85,8 @@ public class MantenimientoDaoImpl implements MantenimientoDao{
     }
 
     @Override
-    public void eliminar(int codigo) {
-        String sql = "DELETE FROM public.mantenimiento WHERE codigo = "+codigo+";";
+    public void anular(int codigo) {
+        String sql = "UPDATE public.mantenimiento SET situacion='Anulado' WHERE codigo="+codigo+";";
         
         System.out.println("SQL = "+sql);
         

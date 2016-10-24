@@ -33,13 +33,8 @@ public class MantenimientoControllerImp implements MantenimientoController{
     }
 
     @Override
-    public boolean modificar(Mantenimiento mant) {
-        return mantDao.modificar(mant);
-    }
-
-    @Override
-    public void eliminar(int codigo) {
-        mantDao.eliminar(codigo);
+    public void anular(int codigo) {
+        mantDao.anular(codigo);
     }
 
     @Override

@@ -13,9 +13,8 @@ import py.edu.facitec.mec.model.Mantenimiento;
  */
 public interface MantenimientoDao {
     void guardar(Mantenimiento mantenimiento);
-    boolean modificar(Mantenimiento mantenimiento);
     Mantenimiento recuperarPorCodigo(int codigo); 
-    void eliminar(int codigo);
+    void anular(int codigo);
     int obtenerMaximo();
     
 }

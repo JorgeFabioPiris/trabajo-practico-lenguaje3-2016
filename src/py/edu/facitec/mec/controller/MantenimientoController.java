@@ -5,7 +5,6 @@
  */
 package py.edu.facitec.mec.controller;
 
-import java.util.List;
 import py.edu.facitec.mec.model.Mantenimiento;
 
 /**
@@ -13,9 +12,8 @@ import py.edu.facitec.mec.model.Mantenimiento;
  * @author Jorge Fabio
  */
 public interface MantenimientoController {
-    void registrar(Mantenimiento ciudad);
-    boolean modificar(Mantenimiento ciudad);
+    void registrar(Mantenimiento mantenimiento);
     Mantenimiento recuperarPorCodigo(int codigo);
-    void eliminar(int codigo);
+    void anular(int codigo);
     int obtenerMaximo();
 }
