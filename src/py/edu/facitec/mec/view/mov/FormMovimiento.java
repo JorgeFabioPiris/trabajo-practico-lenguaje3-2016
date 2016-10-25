@@ -109,7 +109,7 @@ public class FormMovimiento extends javax.swing.JFrame {
         fecha = new com.toedter.calendar.JDateChooser();
         jLabel13 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Movimientos");
         setSize(new java.awt.Dimension(800, 600));
 

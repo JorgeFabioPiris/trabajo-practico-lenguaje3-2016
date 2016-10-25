@@ -30,6 +30,7 @@ public class FormServiciosConsulta extends javax.swing.JFrame {
 //        super(parent, modal);
         initComponents();
         this.controller = new ServiciosControllerImp();
+        this.setLocationRelativeTo(null);
     }
 
     /**

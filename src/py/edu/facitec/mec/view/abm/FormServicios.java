@@ -36,7 +36,7 @@ public class FormServicios extends javax.swing.JFrame {
         estadoModificacion = false;
         
         estadoInicial();
-        
+        this.setLocationRelativeTo(null);
     }
 
     /**

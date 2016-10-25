@@ -30,6 +30,7 @@ public class FormClienteConsulta extends javax.swing.JFrame {
 //        super(parent, modal);
         initComponents();
         this.controller = new ClienteControllerImpl();
+        this.setLocationRelativeTo(null);
     }
 
     /**

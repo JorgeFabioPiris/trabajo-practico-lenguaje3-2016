@@ -41,7 +41,7 @@ public class FormCliente extends javax.swing.JFrame {
         
         DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel(ciudadController.cargarComboBox());
         this.jcbCiudad.setModel(modeloCombo);
-        
+        this.setLocationRelativeTo(null);
         estadoInicial();
     }
 

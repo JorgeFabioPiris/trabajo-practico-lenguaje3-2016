@@ -33,6 +33,7 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
 //        super(parent, modal);
         initComponents();
         this.controller = new CiudadControllerImp();
+        this.setLocationRelativeTo(null);
     }
 
     /**

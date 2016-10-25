@@ -37,6 +37,8 @@ public class FormCiudad extends javax.swing.JFrame {
         
         estadoInicial();
         
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
