@@ -25,6 +25,7 @@ import py.edu.facitec.mec.model.Cliente;
 import py.edu.facitec.mec.model.Mantenimiento;
 import py.edu.facitec.mec.model.MantenimientoDetalle;
 import py.edu.facitec.mec.model.Servicio;
+import py.edu.facitec.mec.util.Utilidad;
 import static py.edu.facitec.mec.view.mov.FormMovimiento.servCodigo;
 
 /**
@@ -323,7 +324,15 @@ public class FormMovimiento extends javax.swing.JFrame {
             new String [] {
                 "Codigo", "Descripcion Servicio", "Cantidad", "P. Unitario", "Subtotal"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jScrollPane2.setViewportView(jTextPane1);
@@ -349,73 +358,75 @@ public class FormMovimiento extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(10, 10, 10)
-                                .addComponent(tfMovNro, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2)
-                                .addGap(10, 10, 10)
-                                .addComponent(cmbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnBuscarClie)
-                                .addGap(10, 10, 10)
-                                .addComponent(tfCodClie, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(tfNombClie, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5)
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(panelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(117, 117, 117)
-                                .addComponent(panelButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(86, 86, 86)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(panelButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel7))
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(tfImpoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnBuscarSer)
-                                        .addGap(6, 6, 6)
-                                        .addComponent(servCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(servDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel8)))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(servCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnBuscarClie)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tfCodClie, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tfNombClie, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(43, 43, 43)
-                                        .addComponent(jLabel11))
-                                    .addComponent(servUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(1, 1, 1)
-                                .addComponent(tfImpoTotal)))
-                        .addGap(0, 10, Short.MAX_VALUE))))
+                                        .addComponent(jLabel1)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(tfMovNro, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel2)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(cmbCondicion, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel5)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnBuscarSer)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(servCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel7)))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(servDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel8))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9)
+                                            .addComponent(servCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10)
+                                            .addComponent(servUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addComponent(jLabel12))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,85 +442,81 @@ public class FormMovimiento extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel4))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfCodClie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarClie)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(tfCodClie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(tfNombClie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                    .addComponent(tfNombClie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscarSer)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(servCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7))
-                        .addGap(11, 11, 11)
-                        .addComponent(servDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(11, 11, 11)
-                        .addComponent(servCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addGap(11, 11, 11)
+                    .addComponent(jLabel6)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel8))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(jLabel9)))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscarSer)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(servDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(servCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(servUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(tfImpoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(servCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(panelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel12)
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11)
+                    .addComponent(tfImpoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarClieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClieActionPerformed
-        FormClienteConsulta consulta = new FormClienteConsulta(this, rootPaneCheckingEnabled);
-        consulta.setVisible(true);
+        obtenerCliente();
     }//GEN-LAST:event_btnBuscarClieActionPerformed
 
     private void btnBuscarSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarSerActionPerformed
-        FormServiciosConsulta cons = new FormServiciosConsulta(this, rootPaneCheckingEnabled);
-        servCodigo.requestFocus();
-        cons.setVisible(true);
+        
+        if(servCodigo.getText().isEmpty()){
+            FormServiciosConsulta cons = new FormServiciosConsulta(this, rootPaneCheckingEnabled);
+            cons.setVisible(true);
+        }else{
+            Servicio servicio = serController.recuperarPorCodigo(Integer.parseInt(servCodigo.getText()));
+            if (servicio!=null) {
+                obtenerServicios();
+                servCantidad.requestFocus();
+            }else{
+                JOptionPane.showMessageDialog(this, "No existe este servicio", "Aviso", 1);
+                servCodigo.requestFocus();
+                servCodigo.setText("");
+            }
+        }
+        
     }//GEN-LAST:event_btnBuscarSerActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if(servCodigo.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Debe ingresar el codigo de un servicio", "Aviso", 1);
-            servCodigo.requestFocus();
+            btnBuscarSer.requestFocus();
         }else{
             cargarTabla(); sumarColumnasTabla(); limpiarCamposServicioDetalle();            
         }
@@ -635,17 +642,9 @@ public class FormMovimiento extends javax.swing.JFrame {
 
     private void tfCodClieFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCodClieFocusLost
         if (tfCodClie.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar un cliente, utilice el boton buscar");
-            btnBuscarClie.requestFocus();
+            
         }else{
-            Cliente clie = clieController.recuperarPorCodigo(Integer.parseInt(tfCodClie.getText()));
-            if (clie!=null) {
-                tfNombClie.setText(clie.getNombres()+" "+clie.getApellidos());
-            }else{
-                JOptionPane.showMessageDialog(this, "No existe este cliente", "Aviso", 1);
-                tfCodClie.requestFocus();
-                tfCodClie.setText("");
-            }
+            btnBuscarClie.doClick();
         }
     }//GEN-LAST:event_tfCodClieFocusLost
 
@@ -653,7 +652,7 @@ public class FormMovimiento extends javax.swing.JFrame {
         if (servCodigo.getText().isEmpty()) {
             
         }else{
-            obtenerServicios();
+            btnBuscarSer.doClick();
         }
     }//GEN-LAST:event_servCodigoFocusLost
 
@@ -705,8 +704,8 @@ public class FormMovimiento extends javax.swing.JFrame {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnBuscarClie;
-    private javax.swing.JButton btnBuscarSer;
+    public static javax.swing.JButton btnBuscarClie;
+    public static javax.swing.JButton btnBuscarSer;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGrabar;
     private javax.swing.JButton btnSalir;
@@ -799,15 +798,81 @@ public class FormMovimiento extends javax.swing.JFrame {
         tfNombClie.setEditable(false);
     }
     
+    private void obtenerCliente(){
+        if(tfCodClie.getText().isEmpty()){
+            FormClienteConsulta consulta = new FormClienteConsulta(this, rootPaneCheckingEnabled);
+            consulta.setVisible(true);
+        }else{
+            Cliente clie = clieController.recuperarPorCodigo(Integer.parseInt(tfCodClie.getText()));
+            if (clie!=null) {
+                tfNombClie.setText(clie.getNombres()+" "+clie.getApellidos());
+                servCodigo.requestFocus();
+            }else{
+                JOptionPane.showMessageDialog(this, "No existe este cliente", "Aviso", 1);
+                tfCodClie.requestFocus();
+                tfCodClie.setText("");
+            }
+        }
+    }
+    
     private void obtenerServicios() {
         Servicio ser = serController.recuperarPorCodigo(Integer.parseInt(servCodigo.getText()));
         if(ser!=null){
             servDescripcion.setText(ser.getDescripcion());
-            servUnitario.setText(ser.getValor_unitario()+"");
+            servUnitario.setText(Utilidad.formatoValorS(ser.getValor_unitario()));
         }else{
             JOptionPane.showMessageDialog(this, "No existe este serivcio", "Aviso", 1);
             servCodigo.setText("");
             servCodigo.requestFocus();
+        }
+    }
+
+    private void obtenerMovimiento() {
+
+        Mantenimiento mant = cabecera.recuperarPorCodigo(Integer.parseInt(tfMovNro.getText()));
+    
+        if (mant!=null) {//Esta parte del codigo recupera la cabecera del movmiento
+            fecha.setDate(mant.getFecha());
+            cmbCondicion.setSelectedItem(mant.getCondicion());
+            tfCodClie.setText(mant.getCliente_codigo()+"");
+            jTextPane1.setText(mant.getObservacion());
+            tfCodClie.requestFocus();
+            servCodigo.requestFocus();
+            
+            String [] nombreColumnas = {"Codigo", "Nombre", "Cantidad", "P. Unitario", "Subtotal"};
+            
+            List<MantenimientoDetalle> mantDet = detalle.recuperarPorFiltro(Integer.parseInt(tfMovNro.getText()));
+            
+            Object[][] datos = new Object[mantDet.size()][nombreColumnas.length];
+            
+            for (int i=0; i< mantDet.size(); i++){
+                
+                Servicio ser = serController.recuperarPorCodigo(mantDet.get(i).getServ_codigo());
+                datos[i][0]=mantDet.get(i).getServ_codigo();
+                datos[i][1]=ser.getNombre();
+                datos[i][2]=Utilidad.formatoValorS(mantDet.get(i).getCantidad());
+                datos[i][3]=Utilidad.formatoValorS(mantDet.get(i).getPrecio());
+                Double can, uni, subtot;
+                can = (mantDet.get(i).getCantidad());
+                uni = (mantDet.get(i).getPrecio());
+                subtot = can*uni;
+                datos[i][4]=Utilidad.formatoValorS(subtot);
+            }
+            modelo = new DefaultTableModel(datos, nombreColumnas);
+            this.jTable1.setModel(modelo);
+            sumarColumnasTabla();
+            estadoConsulta();
+            fecha.requestFocus();
+            tfMovNro.setEnabled(false);
+            if("Anulado".equals(mant.getSituacion())){
+                jLabel13.setText("Este movimiento esta anulado, no se puede revertir.");
+                btnAnular.setEnabled(false);
+            }//Esta parte del codigo recupera el detalle del movimiento y lo carga en la tabla
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "No existe movimiento");
+            tfMovNro.setText("");
+            tfMovNro.requestFocus();
         }
     }
 
@@ -849,11 +914,10 @@ public class FormMovimiento extends javax.swing.JFrame {
             MantenimientoDetalle det = new MantenimientoDetalle();
             det.setMant_codigo(Integer.parseInt(tfMovNro.getText()));
             det.setServ_codigo(Integer.parseInt(jTable1.getValueAt(i, 0).toString()));
-            det.setCantidad(Double.parseDouble(jTable1.getValueAt(i, 2).toString()));
-            det.setPrecio(Double.parseDouble(jTable1.getValueAt(i, 3).toString()));
-            det.setSubtotal(Double.parseDouble(jTable1.getValueAt(i, 4).toString()));
-            detalle.registrar(det);
-            
+            det.setCantidad(Utilidad.formatoValorD(jTable1.getValueAt(i, 2).toString()));
+            det.setPrecio(Utilidad.formatoValorD(jTable1.getValueAt(i, 3).toString()));
+            det.setSubtotal(Utilidad.formatoValorD(jTable1.getValueAt(i, 4).toString()));
+            detalle.registrar(det);            
         }
     }
 
@@ -862,7 +926,7 @@ public class FormMovimiento extends javax.swing.JFrame {
                 fecha.getDate(), 
                 Integer.parseInt(tfCodClie.getText()), 
                 cmbCondicion.getSelectedItem().toString(), 
-                Double.parseDouble(tfImpoTotal.getText()), 
+                Utilidad.formatoValorD(tfImpoTotal.getText()), 
                 jTextPane1.getText(), 
                 "Activo");
         cabecera.registrar(mant);
@@ -878,13 +942,13 @@ public class FormMovimiento extends javax.swing.JFrame {
 
         for(int i=0;i<=(totalRow);i++){
             
-            double sumatoria= Double.parseDouble(String.valueOf(jTable1.getValueAt(i,4)));
+            double sumatoria= Utilidad.formatoValorD(String.valueOf(jTable1.getValueAt(i,4)));
         //en la parte de arriba indica el primer parametro la fila y el segundo la columna 
         //la cual estaras manejando
 
             sumatoria1+=sumatoria;
             
-            tfImpoTotal.setText(sumatoria1+"");
+            tfImpoTotal.setText(Utilidad.formatoValorS(sumatoria1));
         }
     }
 
@@ -913,71 +977,26 @@ public class FormMovimiento extends javax.swing.JFrame {
         fila[3]=servUnitario.getText();
         Double can, uni, subtot;
         can = Double.parseDouble(servCantidad.getText());
-        uni = Double.parseDouble(servUnitario.getText());
+        uni = Utilidad.formatoValorD(servUnitario.getText());
         subtot = can*uni;
-        fila[4]=subtot;
+        fila[4]=Utilidad.formatoValorS(subtot);
         
         modelo.addRow(fila);
 
         jTable1.setModel(modelo);
     }
 
-    private void obtenerMovimiento() {
-
-        Mantenimiento mant = cabecera.recuperarPorCodigo(Integer.parseInt(tfMovNro.getText()));
-    
-        if (mant!=null) {//Esta parte del codigo recupera la cabecera del movmiento
-            fecha.setDate(mant.getFecha());
-            cmbCondicion.setSelectedItem(mant.getCondicion());
-            tfCodClie.setText(mant.getCliente_codigo()+"");
-            jTextPane1.setText(mant.getObservacion());
-            tfCodClie.requestFocus();
-            servCodigo.requestFocus();
-            
-            String [] nombreColumnas = {"Codigo", "Nombre", "Cantidad", "P. Unitario", "Subtotal"};
-            
-            List<MantenimientoDetalle> mantDet = detalle.recuperarPorFiltro(Integer.parseInt(tfMovNro.getText()));
-            
-            Object[][] datos = new Object[mantDet.size()][nombreColumnas.length];
-            
-            for (int i=0; i< mantDet.size(); i++){
-                
-                Servicio ser = serController.recuperarPorCodigo(mantDet.get(i).getServ_codigo());
-                datos[i][0]=mantDet.get(i).getServ_codigo();
-                datos[i][1]=ser.getNombre();
-                datos[i][2]=mantDet.get(i).getCantidad();
-                datos[i][3]=mantDet.get(i).getPrecio();
-                Double can, uni, subtot;
-                can = (mantDet.get(i).getCantidad());
-                uni = (mantDet.get(i).getPrecio());
-                subtot = can*uni;
-                datos[i][4]=subtot;
-            }
-            modelo = new DefaultTableModel(datos, nombreColumnas);
-            this.jTable1.setModel(modelo);
-            sumarColumnasTabla();
-            estadoConsulta();
-            fecha.requestFocus();
-            tfMovNro.setEnabled(false);
-            if("Anulado".equals(mant.getSituacion())){
-                jLabel13.setText("Este movimiento esta anulado, no se puede revertir.");
-                btnAnular.setEnabled(false);
-            }//Esta parte del codigo recupera el detalle del movimiento y lo carga en la tabla
-            
-        }else{
-            JOptionPane.showMessageDialog(this, "No existe movimiento");
-            tfMovNro.setText("");
-            tfMovNro.requestFocus();
-        }
-    }
     boolean validarCampos(){
         boolean validar = false;
         if (tfMovNro.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No se puede grabar un movimiento sin numero");
             tfMovNro.requestFocus();
-        }else if (tfCodClie.getText().isEmpty()) {
+        }else if (tfCodClie.getText().isEmpty()&&tfNombClie.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No se puede grabar un movimiento sin un cliente");
             tfCodClie.requestFocus();
+        }else if(tfImpoTotal.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "No se puede grabar un movimiento sin Servicio");
+            servCodigo.requestFocus();
         }else{
             validar = true;
         }

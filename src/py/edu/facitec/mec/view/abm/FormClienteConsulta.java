@@ -25,12 +25,13 @@ public class FormClienteConsulta extends javax.swing.JFrame {
      */
     
     ClienteController controller;
-        
+    static DefaultTableModel modelo;
     public FormClienteConsulta(java.awt.Frame parent, boolean modal) {
 //        super(parent, modal);
         initComponents();
         this.controller = new ClienteControllerImpl();
         this.setLocationRelativeTo(null);
+        modelo = (DefaultTableModel) jTable1.getModel();
     }
 
     /**
@@ -170,7 +171,7 @@ public class FormClienteConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -258,7 +259,7 @@ public class FormClienteConsulta extends javax.swing.JFrame {
 
     private void cargarTabla(){
         
-        String [] nombreColumnas = {"Codigo", "Nombre", "Apellido"};
+        String [] nombreColumnas = {"Codigo", "Nombres", "Apellidos"};
 
         List<Cliente> listaCliente = controller.recuperarPorFiltro(tfBusqueda.getText());
 
@@ -272,14 +273,14 @@ public class FormClienteConsulta extends javax.swing.JFrame {
             
         }
         
-        DefaultTableModel modelo = new DefaultTableModel(datos, nombreColumnas);
+        DefaultTableModel modelo1 = new DefaultTableModel(datos, nombreColumnas);
         
-        this.jTable1.setModel(modelo);
-    }
+        this.jTable1.setModel(modelo1);    }
 
     private void seleccionarCliente() {
         int cod = (Integer)jTable1.getValueAt(jTable1.getSelectedRow(), 0);
         FormCliente.tfCodigo.setText(cod+"");
+        FormCliente.btnConsultar.doClick();
         dispose();
     }
     
@@ -293,5 +294,9 @@ public class FormClienteConsulta extends javax.swing.JFrame {
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
             buttom.doClick();
         }
+    }
+
+    private void limpiar() {
+        jTable1.setModel(modelo);
     }
 }

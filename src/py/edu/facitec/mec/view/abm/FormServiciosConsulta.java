@@ -25,12 +25,13 @@ public class FormServiciosConsulta extends javax.swing.JFrame {
      */
     
     ServiciosController controller;
-        
+    static DefaultTableModel modelo;
     public FormServiciosConsulta(java.awt.Frame parent, boolean modal) {
 //        super(parent, modal);
         initComponents();
         this.controller = new ServiciosControllerImp();
         this.setLocationRelativeTo(null);
+        modelo = (DefaultTableModel) jTable1.getModel();
     }
 
     /**
@@ -77,7 +78,7 @@ public class FormServiciosConsulta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Nombres", "Descripcion"
+                "Codigo", "Nombre", "Descripcion"
             }
         ));
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -170,7 +171,7 @@ public class FormServiciosConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -294,6 +295,7 @@ public class FormServiciosConsulta extends javax.swing.JFrame {
     private void seleccionarCliente() {
         int cod = (Integer)jTable1.getValueAt(jTable1.getSelectedRow(), 0);
         FormServicios.tfCodigo.setText(cod+"");
+        FormServicios.btnConsultar.doClick();
         dispose();
     }
     
@@ -307,5 +309,9 @@ public class FormServiciosConsulta extends javax.swing.JFrame {
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
             buttom.doClick();
         }
+    }
+
+    private void limpiar() {
+        jTable1.setModel(modelo);
     }
 }

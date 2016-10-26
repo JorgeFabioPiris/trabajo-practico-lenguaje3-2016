@@ -165,6 +165,9 @@ public class FormCiudad extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfNombreKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNombreKeyTyped(evt);
+            }
         });
 
         tfIso.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -175,6 +178,9 @@ public class FormCiudad extends javax.swing.JFrame {
         tfIso.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfIsoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfIsoKeyTyped(evt);
             }
         });
 
@@ -395,6 +401,17 @@ public class FormCiudad extends javax.swing.JFrame {
         hacerClicConEnter(evt, btnNuevo);
     }//GEN-LAST:event_btnNuevoKeyPressed
 
+    private void tfNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNombreKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfNombreKeyTyped
+
+    private void tfIsoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfIsoKeyTyped
+        int limite  = 3;
+        if (tfIso.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfIsoKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -446,7 +463,7 @@ public class FormCiudad extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnConsultar;
+    public static javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
@@ -494,7 +511,7 @@ private void consultarClientePorCodito(int codigo) {
     private void guardar() {
         Ciudad ciu = new Ciudad(tfNombre.getText(), tfIso.getText(), cbEstado.isSelected());
         ciudadController.registrar(ciu);
-        JOptionPane.showMessageDialog(this, "Cliente Nuevo guardado con exito", "Aviso", 2);
+        JOptionPane.showMessageDialog(this, "Nueva ciudad guardada con exito", "Aviso", 2);
         limpiar();
     }
 
@@ -506,7 +523,7 @@ private void consultarClientePorCodito(int codigo) {
         
         if(result){
             
-            JOptionPane.showMessageDialog(this, "Cliente actualizado con exito", "Aviso", 1);
+            JOptionPane.showMessageDialog(this, "Ciudad actualizada con exito", "Aviso", 1);
         }
         
         limpiar();

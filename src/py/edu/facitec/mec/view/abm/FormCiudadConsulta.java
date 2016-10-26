@@ -12,10 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.table.DefaultTableModel;
 import py.edu.facitec.mec.controller.CiudadController;
 import py.edu.facitec.mec.controller.CiudadControllerImp;
-import py.edu.facitec.mec.controller.ClienteController;
-import py.edu.facitec.mec.controller.ClienteControllerImpl;
 import py.edu.facitec.mec.model.Ciudad;
-import py.edu.facitec.mec.view.mov.FormMovimiento;
 
 /**
  *
@@ -28,12 +25,13 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
      */
     
     CiudadController controller;
-        
+    static DefaultTableModel modelo;
     public FormCiudadConsulta(java.awt.Frame parent, boolean modal) {
 //        super(parent, modal);
         initComponents();
         this.controller = new CiudadControllerImp();
         this.setLocationRelativeTo(null);
+        modelo = (DefaultTableModel) jTable1.getModel();
     }
 
     /**
@@ -56,6 +54,7 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta de Ciudades");
+        setAlwaysOnTop(true);
 
         tfBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -80,7 +79,7 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo", "Nombres", "ISO"
+                "Codigo", "Nombre", "ISO"
             }
         ));
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -91,8 +90,6 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
@@ -178,7 +175,7 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -282,14 +279,15 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
             
         }
         
-        DefaultTableModel modelo = new DefaultTableModel(datos, nombreColumnas);
+        DefaultTableModel modelo1 = new DefaultTableModel(datos, nombreColumnas);
         
-        this.jTable1.setModel(modelo);
+        this.jTable1.setModel(modelo1);
     }
 
     private void seleccionar() {
         int cod = (Integer)jTable1.getValueAt(jTable1.getSelectedRow(), 0);
         FormCiudad.tfCodigo.setText(cod+"");
+        FormCiudad.btnConsultar.doClick();
         dispose();
     }
     
@@ -303,5 +301,9 @@ public class FormCiudadConsulta extends javax.swing.JFrame {
         if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
             buttom.doClick();
         }
+    }
+
+    private void limpiar() {
+        jTable1.setModel(modelo);
     }
 }

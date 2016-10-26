@@ -5,16 +5,20 @@
  */
 package py.edu.facitec.mec.view.abm;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import py.edu.facitec.mec.controller.CiudadController;
 import py.edu.facitec.mec.controller.CiudadControllerImp;
 import py.edu.facitec.mec.controller.ClienteController;
 import py.edu.facitec.mec.controller.ClienteControllerImpl;
 import py.edu.facitec.mec.model.Cliente;
+import py.edu.facitec.mec.util.Utilidad;
+import py.edu.facitec.mec.util.SoloMayusculas;
 
 /**
  *
@@ -43,6 +47,19 @@ public class FormCliente extends javax.swing.JFrame {
         this.jcbCiudad.setModel(modeloCombo);
         this.setLocationRelativeTo(null);
         estadoInicial();
+        
+        //validar campos de textos solo mayusculas
+        tfNombres.setDocument(new SoloMayusculas());
+        tfApellidos.setDocument(new SoloMayusculas());
+        tfDireccion.setDocument(new SoloMayusculas());
+        
+        //validar los campos a solo letras
+        soloLetras(tfNombres);
+        soloLetras(tfApellidos);
+        
+        //validar los campos a solo numeros
+        soloNumeros(tfCelular);
+        soloNumeros(tfCredito);
     }
 
     /**
@@ -151,9 +168,9 @@ public class FormCliente extends javax.swing.JFrame {
 
         jLabel1.setText("Codigo:");
 
-        jLabel2.setText("Nombres(s):");
+        jLabel2.setText("Nombre(s):");
 
-        jLabel3.setText("Apellidos(s):");
+        jLabel3.setText("Apellido(s):");
 
         jLabel4.setText("Direccion:");
 
@@ -547,7 +564,7 @@ public class FormCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnConsultar;
+    public static javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
@@ -584,7 +601,7 @@ private void consultarClientePorCodito(int codigo) {
                 tfDireccion.setText(cliente.getDireccion());
                 jcbCiudad.setSelectedIndex(cliente.getCiudad_codigo()-1);
                 tfCelular.setText(cliente.getCelular());
-                tfCredito.setText(cliente.getCredito()+"");
+                tfCredito.setText(Utilidad.formatoValorS(cliente.getCredito()));
                 if (cliente.isEstado()) {
                     cbEstado.setSelected(cliente.isEstado());
                     cbEstado.setLabel("Activo");
@@ -605,7 +622,14 @@ private void consultarClientePorCodito(int codigo) {
     }
 
     private void guardar() {
-        Cliente clie = new Cliente(tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), jcbCiudad.getSelectedIndex()+1, tfCelular.getText(), Double.parseDouble(tfCredito.getText()), cbEstado.isSelected());
+        Cliente clie = new Cliente(
+                tfNombres.getText(), 
+                tfApellidos.getText(), 
+                tfDireccion.getText(), 
+                jcbCiudad.getSelectedIndex()+1, 
+                tfCelular.getText(), 
+                Utilidad.formatoValorD(tfCredito.getText()), 
+                cbEstado.isSelected());
         clienteController.registrar(clie);
         JOptionPane.showMessageDialog(this, "Cliente Nuevo guardado con exito", "Aviso", 2);
         limpiar();
@@ -613,7 +637,15 @@ private void consultarClientePorCodito(int codigo) {
 
     private void modificar() {
         
-        Cliente clie = new Cliente(Integer.parseInt(tfCodigo.getText()), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), jcbCiudad.getSelectedIndex()+1, tfCelular.getText(), Double.parseDouble(tfCredito.getText()), cbEstado.isSelected());
+        Cliente clie = new Cliente(
+                Integer.parseInt(tfCodigo.getText()), 
+                tfNombres.getText(), 
+                tfApellidos.getText(), 
+                tfDireccion.getText(), 
+                jcbCiudad.getSelectedIndex()+1, 
+                tfCelular.getText(), 
+                Utilidad.formatoValorD(tfCredito.getText()), 
+                cbEstado.isSelected());
         
         boolean result = clienteController.modificar(clie);
         
@@ -739,5 +771,31 @@ private void consultarClientePorCodito(int codigo) {
             valido = true;
         }
         return valido;
+    }
+    
+    public final void soloLetras(JTextField a){
+        a.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(Character.isDigit(c)){
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+    }
+    
+    public static final void soloNumeros(JTextField a){
+        a.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(Character.isLetter(c)){
+//                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
     }
 }

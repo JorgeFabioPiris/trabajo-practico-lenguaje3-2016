@@ -130,7 +130,7 @@ public class ClienteDaoImpl implements ClienteDao{
                 + "FROM public.clientes "
                 + "WHERE (nombres LIKE '%"+filtro+"%') "
                 + "or (apellidos LIKE '%"+filtro+"%') "
-                + "or (direccion LIKE '%"+filtro+"%');";
+                + "or (direccion LIKE '%"+filtro+"%') ORDER BY nombres;";
         
         List<Cliente> lista = new ArrayList<>();
         

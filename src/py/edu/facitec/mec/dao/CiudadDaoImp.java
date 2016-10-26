@@ -168,7 +168,7 @@ public class CiudadDaoImp implements CiudadDao{
                 + "FROM public.ciudades "
                 + "WHERE (nombre LIKE '%"+filtro+"%') "
                 + "or (iso LIKE '%"+filtro+"%')"
-                + "ORDER BY codigo;";
+                + "ORDER BY nombre;";
         
         List<Ciudad> lista = new ArrayList<>();
         

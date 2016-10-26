@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author Jorge Fabio
  */
 public class Utilidad {
-    public static Double formatoValor(String valor){
+    public static Double formatoValorD(String valor){
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator(',');
         simbolo.setGroupingSeparator('.');
@@ -32,7 +32,7 @@ public class Utilidad {
         return numero.doubleValue();
     }
 
-    public static String formatoValor(Double valor){
+    public static String formatoValorS(Double valor){
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator(',');
         simbolo.setGroupingSeparator('.');

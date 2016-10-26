@@ -104,7 +104,10 @@ public class ServicioDaoImp implements ServicioDao{
         
         List<Servicio> lista = new ArrayList<>();
         
-        sql = "SELECT codigo, nombre, descripcion, valor_unitario, estado FROM public.servicio;";
+        sql = "SELECT codigo, nombre, descripcion, valor_unitario, estado "
+                + "FROM public.servicio "
+                + "WHERE (nombre LIKE '%"+filtro+"%') "
+                + "or (descripcion LIKE '%"+filtro+"%');";
         
         Servicio servicio = null;
         

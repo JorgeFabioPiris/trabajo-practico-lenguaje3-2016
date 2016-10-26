@@ -11,7 +11,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import py.edu.facitec.mec.controller.ServiciosController;
 import py.edu.facitec.mec.controller.ServiciosControllerImp;
-import py.edu.facitec.mec.model.Cliente;
 import py.edu.facitec.mec.model.Servicio;
 
 /**
@@ -477,7 +476,7 @@ public class FormServicios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnConsultar;
+    public static javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
@@ -625,7 +624,7 @@ private void consultarClientePorCodito(int codigo) {
     private boolean validarCampos(){
         boolean valido = false;
         if(tfNombre.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "El campo Nombres es obligatorio", "Aviso", 1);
+            JOptionPane.showMessageDialog(this, "El campo Nombre es obligatorio", "Aviso", 1);
             tfNombre.requestFocus();
         }else if(tfDescripcion.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "El campo Descripcion es obligatorio", "Aviso", 1);
