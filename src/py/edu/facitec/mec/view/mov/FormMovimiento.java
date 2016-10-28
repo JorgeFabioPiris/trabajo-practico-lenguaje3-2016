@@ -830,11 +830,13 @@ public class FormMovimiento extends javax.swing.JFrame {
     private void obtenerMovimiento() {
 
         Mantenimiento mant = cabecera.recuperarPorCodigo(Integer.parseInt(tfMovNro.getText()));
-    
+        Cliente clie = clieController.recuperarPorCodigo(mant.getCliente_codigo());
+        
         if (mant!=null) {//Esta parte del codigo recupera la cabecera del movmiento
             fecha.setDate(mant.getFecha());
             cmbCondicion.setSelectedItem(mant.getCondicion());
             tfCodClie.setText(mant.getCliente_codigo()+"");
+            tfNombClie.setText(clie.getNombres()+" "+clie.getApellidos());
             jTextPane1.setText(mant.getObservacion());
             tfCodClie.requestFocus();
             servCodigo.requestFocus();

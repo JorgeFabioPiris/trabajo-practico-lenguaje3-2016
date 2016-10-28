@@ -5,6 +5,8 @@
  */
 package py.edu.facitec.mec.controller;
 
+import java.util.Date;
+import java.util.List;
 import py.edu.facitec.mec.dao.MantenimientoDao;
 import py.edu.facitec.mec.dao.MantenimientoDaoImpl;
 import py.edu.facitec.mec.model.Mantenimiento;
@@ -40,6 +42,11 @@ public class MantenimientoControllerImp implements MantenimientoController{
     @Override
     public int obtenerMaximo() {
         return mantDao.obtenerMaximo();
+    }
+
+    @Override
+    public List<Mantenimiento> reporteMantenimiento(String fecha1, String fecha2, int cod1, int cod2, String orden) {
+        return mantDao.reporteMantenimiento(fecha1, fecha2, cod1, cod2, orden);
     }
 
 }

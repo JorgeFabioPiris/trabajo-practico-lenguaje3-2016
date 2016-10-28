@@ -32,7 +32,7 @@ public class FormCliente extends javax.swing.JFrame {
     
     ClienteController clienteController;
     CiudadController ciudadController;
-    
+    DefaultComboBoxModel modeloCombo;
     boolean estadoModificacion;
     
     public FormCliente(java.awt.Frame parent, boolean modal) {
@@ -43,8 +43,7 @@ public class FormCliente extends javax.swing.JFrame {
         
         estadoModificacion = false;
         
-        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel(ciudadController.cargarComboBox());
-        this.jcbCiudad.setModel(modeloCombo);
+        cargarCombo();
         this.setLocationRelativeTo(null);
         estadoInicial();
         
@@ -186,6 +185,9 @@ public class FormCliente extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tfCodigoFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfCodigoFocusLost(evt);
+            }
         });
         tfCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -202,6 +204,9 @@ public class FormCliente extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfNombresKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNombresKeyTyped(evt);
+            }
         });
 
         tfApellidos.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -213,6 +218,9 @@ public class FormCliente extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfApellidosKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfApellidosKeyTyped(evt);
+            }
         });
 
         tfDireccion.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -223,6 +231,9 @@ public class FormCliente extends javax.swing.JFrame {
         tfDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfDireccionKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfDireccionKeyTyped(evt);
             }
         });
 
@@ -242,6 +253,9 @@ public class FormCliente extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfCelularKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfCelularKeyTyped(evt);
+            }
         });
 
         tfCredito.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -252,6 +266,9 @@ public class FormCliente extends javax.swing.JFrame {
         tfCredito.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfCreditoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfCreditoKeyTyped(evt);
             }
         });
 
@@ -477,6 +494,7 @@ public class FormCliente extends javax.swing.JFrame {
         if(validar){
             guardar();
         }
+        cargarCombo();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -484,10 +502,12 @@ public class FormCliente extends javax.swing.JFrame {
         if(validar){
             modificar();
         }
+        cargarCombo();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         eliminar();
+        cargarCombo();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -518,6 +538,49 @@ public class FormCliente extends javax.swing.JFrame {
     private void btnNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuevoKeyPressed
         hacerClicConEnter(evt, btnNuevo);
     }//GEN-LAST:event_btnNuevoKeyPressed
+
+    private void tfCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCodigoFocusLost
+        if(tfCodigo.getText().isEmpty()){
+            
+        }else{
+            btnConsultar.doClick();
+        }
+    }//GEN-LAST:event_tfCodigoFocusLost
+
+    private void tfNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNombresKeyTyped
+        int limite  = 30;
+        if (tfNombres.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfNombresKeyTyped
+
+    private void tfApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfApellidosKeyTyped
+        int limite  = 30;
+        if (tfApellidos.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfApellidosKeyTyped
+
+    private void tfDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfDireccionKeyTyped
+        int limite  = 120;
+        if (tfDireccion.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfDireccionKeyTyped
+
+    private void tfCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCelularKeyTyped
+        int limite  = 30;
+        if (tfCelular.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfCelularKeyTyped
+
+    private void tfCreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCreditoKeyTyped
+        int limite  = 15;
+        if (tfCredito.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfCreditoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -748,6 +811,11 @@ private void consultarClientePorCodito(int codigo) {
         btnCancelar.setEnabled(true);
         btnNuevo.setEnabled(false);
         cbEstado.setEnabled(true);
+    }
+    
+    private void cargarCombo(){
+        modeloCombo = new DefaultComboBoxModel(ciudadController.cargarComboBox());
+        this.jcbCiudad.setModel(modeloCombo);
     }
     
     private boolean validarCampos(){

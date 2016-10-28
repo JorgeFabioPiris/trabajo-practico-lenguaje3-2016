@@ -5,13 +5,18 @@
  */
 package py.edu.facitec.mec.view.abm;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import py.edu.facitec.mec.controller.ServiciosController;
 import py.edu.facitec.mec.controller.ServiciosControllerImp;
 import py.edu.facitec.mec.model.Servicio;
+import py.edu.facitec.mec.util.SoloMayusculas;
+import py.edu.facitec.mec.util.Utilidad;
+import static py.edu.facitec.mec.view.abm.FormCiudad.soloNumeros;
 
 /**
  *
@@ -36,6 +41,15 @@ public class FormServicios extends javax.swing.JFrame {
         
         estadoInicial();
         this.setLocationRelativeTo(null);
+        
+        //Validar solo numeros
+        soloNumeros(tfCodigo);
+        soloNumeros(tfVarlorUnitario);
+        
+        //Validar solo mayusculas
+        tfNombre.setDocument(new SoloMayusculas());
+        tfDescripcion.setDocument(new SoloMayusculas());
+        
     }
 
     /**
@@ -150,6 +164,9 @@ public class FormServicios extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tfCodigoFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfCodigoFocusLost(evt);
+            }
         });
         tfCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -166,6 +183,9 @@ public class FormServicios extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfNombreKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfNombreKeyTyped(evt);
+            }
         });
 
         tfDescripcion.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -177,6 +197,9 @@ public class FormServicios extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfDescripcionKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfDescripcionKeyTyped(evt);
+            }
         });
 
         tfVarlorUnitario.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -187,6 +210,9 @@ public class FormServicios extends javax.swing.JFrame {
         tfVarlorUnitario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tfVarlorUnitarioKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tfVarlorUnitarioKeyTyped(evt);
             }
         });
 
@@ -417,6 +443,35 @@ public class FormServicios extends javax.swing.JFrame {
         hacerClicConEnter(evt, btnNuevo);
     }//GEN-LAST:event_btnNuevoKeyPressed
 
+    private void tfCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCodigoFocusLost
+        if(tfCodigo.getText().isEmpty()){
+            
+        }else{
+            btnConsultar.doClick();
+        }
+    }//GEN-LAST:event_tfCodigoFocusLost
+
+    private void tfNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNombreKeyTyped
+        int limite  = 60;
+        if (tfNombre.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfNombreKeyTyped
+
+    private void tfDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfDescripcionKeyTyped
+        int limite  = 120;
+        if (tfDescripcion.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfDescripcionKeyTyped
+
+    private void tfVarlorUnitarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfVarlorUnitarioKeyTyped
+        int limite  = 15;
+        if (tfVarlorUnitario.getText().length()== limite){
+            evt.consume();
+        }
+    }//GEN-LAST:event_tfVarlorUnitarioKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -504,7 +559,7 @@ private void consultarClientePorCodito(int codigo) {
             if (servicio != null) {
                 tfNombre.setText(servicio.getNombre());
                 tfDescripcion.setText(servicio.getDescripcion());
-                tfVarlorUnitario.setText(servicio.getValor_unitario()+"");
+                tfVarlorUnitario.setText(Utilidad.formatoValorS(servicio.getValor_unitario()));
                 if (servicio.isEstado()) {
                     cbEstado.setSelected(servicio.isEstado());
                     cbEstado.setLabel("Activo");
@@ -525,7 +580,11 @@ private void consultarClientePorCodito(int codigo) {
     }
 
     private void guardar() {
-        Servicio serv = new Servicio(tfNombre.getText(), tfDescripcion.getText(), Double.parseDouble(tfVarlorUnitario.getText()), cbEstado.isSelected());
+        Servicio serv = new Servicio(
+                tfNombre.getText(), 
+                tfDescripcion.getText(), 
+                Utilidad.formatoValorD(tfVarlorUnitario.getText()), 
+                cbEstado.isSelected());
         servicioController.insertar(serv);
         JOptionPane.showMessageDialog(this, "Servicio nuevo guardado con exito", "Aviso", 2);
         limpiar();
@@ -533,7 +592,13 @@ private void consultarClientePorCodito(int codigo) {
 
     private void modificar() {
         
-        Servicio serv = new Servicio(Integer.parseInt(tfCodigo.getText()), tfNombre.getText(), tfDescripcion.getText(), Double.parseDouble(tfVarlorUnitario.getText()), cbEstado.isSelected());
+        Servicio serv = new Servicio(
+                Integer.parseInt(tfCodigo.getText()), 
+                tfNombre.getText(), tfDescripcion.getText(), 
+                Utilidad.formatoValorD(tfVarlorUnitario.getText()), 
+                cbEstado.isSelected());
+        
+        servicioController.modificar(serv);
         
         JOptionPane.showMessageDialog(this, "Servicio actualizado con exito", "Aviso", 1);
         
@@ -636,5 +701,31 @@ private void consultarClientePorCodito(int codigo) {
             valido = true;
         }
         return valido;
+    }
+    
+    public final void soloLetras(JTextField a){
+        a.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(Character.isDigit(c)){
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+    }
+    
+    public static final void soloNumeros(JTextField a){
+        a.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(Character.isLetter(c)){
+//                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
     }
 }

@@ -7,6 +7,9 @@ package py.edu.facitec.mec.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import py.edu.facitec.mec.model.Mantenimiento;
@@ -129,4 +132,50 @@ public class MantenimientoDaoImpl implements MantenimientoDao{
         return max+1;
     }
 
+    
+    @Override
+    public List<Mantenimiento> reporteMantenimiento(String fecha1, String fecha2, int cod1, int cod2, String orden) {
+        
+    String sql = "SELECT mantenimiento.\"codigo\" AS mov, "
+            + "mantenimiento.\"fecha\" AS fecha, "
+            + "mantenimiento.\"cliente_codigo\" AS codigo, "
+            + "clientes.\"nombres\" AS nombres, "
+            + "clientes.\"apellidos\" AS apellidos,"
+            + "mantenimiento.\"condicion\" AS condicion, "
+            + "mantenimiento.\"importe_total\" AS total "
+            + "FROM \"public\".\"clientes\" clientes INNER JOIN \"public\".\"mantenimiento\" mantenimiento ON clientes.\"codigo\" = mantenimiento.\"cliente_codigo\" "
+            + "WHERE fecha BETWEEN '"+fecha1+"' AND '"+fecha2+"' AND "
+            + "cliente_codigo BETWEEN "+cod1+" AND "+cod2+" "
+            + "ORDER BY "+orden+";";    
+
+    List<Mantenimiento> lista = new ArrayList<>();
+        
+        
+        Mantenimiento mant = null;
+        
+        ConexionManager.conectar();
+        
+        try {
+            ResultSet rs = ConexionManager.st.executeQuery(sql);
+            System.out.println("SQL "+sql);
+            
+            while(rs.next()) {
+                mant = new Mantenimiento();
+                mant.setCodigo(rs.getInt("mov"));
+                mant.setFecha(rs.getDate("fecha"));
+                mant.setCliente_codigo(rs.getInt("codigo"));
+                mant.setCondicion(rs.getString("condicion"));
+                mant.setImporte_total(rs.getDouble("total"));
+                lista.add(mant);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicioDaoImp.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al ejecutar sql "+ex);
+        }
+        
+        ConexionManager.desconectar();
+        
+        return lista;
+    }
 }

@@ -5,13 +5,16 @@
  */
 package py.edu.facitec.mec.view.abm;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import py.edu.facitec.mec.controller.CiudadController;
 import py.edu.facitec.mec.controller.CiudadControllerImp;
 import py.edu.facitec.mec.model.Ciudad;
+import py.edu.facitec.mec.util.SoloMayusculas;
 
 /**
  *
@@ -38,6 +41,17 @@ public class FormCiudad extends javax.swing.JFrame {
         estadoInicial();
         
         this.setLocationRelativeTo(null);
+        
+        //Validar solo numeros
+        soloNumeros(tfCodigo);
+        
+        //Validar solo letras
+        soloLetras(tfNombre);
+        soloLetras(tfIso);
+        
+        //Validar solo mayusculas
+        tfNombre.setDocument(new SoloMayusculas());
+        tfIso.setDocument(new SoloMayusculas());
         
     }
 
@@ -148,6 +162,9 @@ public class FormCiudad extends javax.swing.JFrame {
         tfCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tfCodigoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfCodigoFocusLost(evt);
             }
         });
         tfCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -402,7 +419,10 @@ public class FormCiudad extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoKeyPressed
 
     private void tfNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfNombreKeyTyped
-        // TODO add your handling code here:
+        int limite  = 60;
+        if (tfNombre.getText().length()== limite){
+            evt.consume();
+        }
     }//GEN-LAST:event_tfNombreKeyTyped
 
     private void tfIsoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfIsoKeyTyped
@@ -411,6 +431,14 @@ public class FormCiudad extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_tfIsoKeyTyped
+
+    private void tfCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCodigoFocusLost
+        if(tfCodigo.getText().isEmpty()){
+            
+        }else{
+            btnConsultar.doClick();
+        }
+    }//GEN-LAST:event_tfCodigoFocusLost
 
     /**
      * @param args the command line arguments
@@ -618,5 +646,31 @@ private void consultarClientePorCodito(int codigo) {
             valido = true;
         }
         return valido;
+    }
+    
+    public final void soloLetras(JTextField a){
+        a.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(Character.isDigit(c)){
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+    }
+    
+    public static final void soloNumeros(JTextField a){
+        a.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(Character.isLetter(c)){
+//                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
     }
 }
