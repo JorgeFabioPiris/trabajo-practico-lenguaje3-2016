@@ -555,7 +555,12 @@ public class FormMovimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        dispose();
+        int opcion = JOptionPane.showConfirmDialog(this, "Desea salir?", "Aviso", 2);
+        if (opcion == JOptionPane.YES_OPTION) {
+            dispose();
+        }else{
+            btnSalir.requestFocus();
+        }
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void tfMovNroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfMovNroKeyPressed

@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -110,6 +111,7 @@ public class FormInformeServicios extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Consulta de Movimientos");
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -386,7 +388,12 @@ public class FormInformeServicios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        dispose();
+        int opcion = JOptionPane.showConfirmDialog(this, "Desea salir?", "Aviso", 2);
+        if (opcion == JOptionPane.YES_OPTION) {
+            dispose();
+        }else{
+            btnSalir.requestFocus();
+        }
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void tfClienteDesdeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfClienteDesdeKeyPressed
