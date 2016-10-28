@@ -218,6 +218,7 @@ public class FormPrincipal extends javax.swing.JFrame {
 
         jMenu4.setText("Ayuda");
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem6.setText("Acerca de:");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

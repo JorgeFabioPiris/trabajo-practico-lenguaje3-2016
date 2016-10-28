@@ -17,6 +17,7 @@ public class Ayuda extends javax.swing.JDialog {
     public Ayuda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
