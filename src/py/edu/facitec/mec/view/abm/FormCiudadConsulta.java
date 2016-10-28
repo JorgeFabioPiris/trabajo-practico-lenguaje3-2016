@@ -16,8 +16,9 @@ import py.edu.facitec.mec.model.Ciudad;
 
 /**
  *
- * @author Jorge Fabio
- */
+ * @author: Parte grafica: Rosalino Cabral 
+ * Logica de programacion: Jorge Fabio
+*/
 public class FormCiudadConsulta extends javax.swing.JFrame {
 
     /**

@@ -18,7 +18,8 @@ import py.edu.facitec.mec.util.SoloMayusculas;
 
 /**
  *
- * @author Jorge Fabio
+ * @author: Parte grafica: Rosalino Cabral 
+ * Logica de programacion: Jorge Fabio
  */
 public class FormCiudad extends javax.swing.JFrame {
 

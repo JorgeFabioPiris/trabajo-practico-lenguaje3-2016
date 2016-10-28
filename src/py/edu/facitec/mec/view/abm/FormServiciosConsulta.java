@@ -16,7 +16,8 @@ import py.edu.facitec.mec.model.Servicio;
 
 /**
  *
- * @author Jorge Fabio
+ * @author: Parte grafica: Rosalino Cabral 
+ * Logica de programacion: Jorge Fabio
  */
 public class FormServiciosConsulta extends javax.swing.JFrame {
 

@@ -5,15 +5,22 @@
  */
 package py.edu.facitec.mec.view.mov.report;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -32,8 +39,9 @@ import py.edu.facitec.mec.util.Utilidad;
 
 /**
  *
- * @author Renacer
- */
+  * @author: Parte grafica: Rosalino Cabral 
+ * Logica de programacion: Jorge Fabio
+*/
 public class FormInformeServicios extends javax.swing.JFrame {
 
     /**
@@ -47,11 +55,24 @@ public class FormInformeServicios extends javax.swing.JFrame {
     String dateString1; 
     String dateString2;
     
+    Calendar hoy;
+    
     public FormInformeServicios() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        jrFecha.setSelected(true);
         controller = new MantenimientoControllerImp();
         clieController = new ClienteControllerImpl();
         modelo = (DefaultTableModel) jTable1.getModel();
+        
+        hoy = new GregorianCalendar();
+        fechaDesde.setCalendar(hoy);
+        fechaHasta.setCalendar(hoy);
+        
+        tfClienteDesde.requestFocus();
+        
+        soloNumeros(tfClienteDesde);
+        soloNumeros(tfClienteHasta);
     }
 
     /**
@@ -88,12 +109,17 @@ public class FormInformeServicios extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
+            }
+        });
+        btnAceptar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAceptarKeyPressed(evt);
             }
         });
 
@@ -103,6 +129,11 @@ public class FormInformeServicios extends javax.swing.JFrame {
                 btnImprimirActionPerformed(evt);
             }
         });
+        btnImprimir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnImprimirKeyPressed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -110,11 +141,21 @@ public class FormInformeServicios extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
+            }
+        });
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalirKeyPressed(evt);
             }
         });
 
@@ -161,9 +202,59 @@ public class FormInformeServicios extends javax.swing.JFrame {
 
         buttonGroup1.add(jrCliente);
         jrCliente.setText("Cliente");
+        jrCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrClienteKeyPressed(evt);
+            }
+        });
 
         buttonGroup1.add(jrFecha);
         jrFecha.setText("Fecha");
+        jrFecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jrFechaKeyPressed(evt);
+            }
+        });
+
+        fechaDesde.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fechaDesdeKeyPressed(evt);
+            }
+        });
+
+        fechaHasta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fechaHastaKeyPressed(evt);
+            }
+        });
+
+        tfClienteDesde.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfClienteDesdeFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfClienteDesdeFocusLost(evt);
+            }
+        });
+        tfClienteDesde.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfClienteDesdeKeyPressed(evt);
+            }
+        });
+
+        tfClienteHasta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tfClienteHastaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfClienteHastaFocusLost(evt);
+            }
+        });
+        tfClienteHasta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tfClienteHastaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -283,6 +374,7 @@ public class FormInformeServicios extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         cargarTabla();
+        jTabbedPane4.setSelectedIndex(1);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
@@ -290,12 +382,72 @@ public class FormInformeServicios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void tfClienteDesdeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfClienteDesdeKeyPressed
+        moverConEnter(evt, tfClienteHasta);
+    }//GEN-LAST:event_tfClienteDesdeKeyPressed
+
+    private void tfClienteHastaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfClienteHastaKeyPressed
+        moverConEnter(evt, fechaDesde);
+    }//GEN-LAST:event_tfClienteHastaKeyPressed
+
+    private void fechaDesdeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaDesdeKeyPressed
+        moverConEnter(evt, fechaHasta);
+    }//GEN-LAST:event_fechaDesdeKeyPressed
+
+    private void fechaHastaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaHastaKeyPressed
+        moverConEnter(evt, jrCliente);
+    }//GEN-LAST:event_fechaHastaKeyPressed
+
+    private void jrClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrClienteKeyPressed
+        moverConEnter(evt, jrFecha);
+    }//GEN-LAST:event_jrClienteKeyPressed
+
+    private void btnAceptarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAceptarKeyPressed
+        hacerClicConEnter(evt, btnAceptar);
+    }//GEN-LAST:event_btnAceptarKeyPressed
+
+    private void btnImprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnImprimirKeyPressed
+        hacerClicConEnter(evt, btnImprimir);
+    }//GEN-LAST:event_btnImprimirKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        hacerClicConEnter(evt, btnCancelar);
+    }//GEN-LAST:event_btnCancelarKeyPressed
+
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
+        hacerClicConEnter(evt, btnSalir);
+    }//GEN-LAST:event_btnSalirKeyPressed
+
+    private void tfClienteDesdeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfClienteDesdeFocusGained
+        tfClienteDesde.selectAll();
+    }//GEN-LAST:event_tfClienteDesdeFocusGained
+
+    private void tfClienteHastaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfClienteHastaFocusGained
+        tfClienteHasta.selectAll();
+    }//GEN-LAST:event_tfClienteHastaFocusGained
+
+    private void tfClienteDesdeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfClienteDesdeFocusLost
+        if (tfClienteDesde.getText().isEmpty()) {
+            tfClienteDesde.setText("1");
+        }
+    }//GEN-LAST:event_tfClienteDesdeFocusLost
+
+    private void tfClienteHastaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfClienteHastaFocusLost
+        if (tfClienteHasta.getText().isEmpty()) {
+            tfClienteHasta.setText(tfClienteDesde.getText());
+        }
+    }//GEN-LAST:event_tfClienteHastaFocusLost
+
+    private void jrFechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrFechaKeyPressed
+        moverConEnter(evt, btnAceptar);
+    }//GEN-LAST:event_jrFechaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -409,7 +561,8 @@ public class FormInformeServicios extends javax.swing.JFrame {
             lista.add(reporte);
         }
         try {
-            JasperReport informe = (JasperReport)JRLoader.loadObject("C:\\Users\\Jorge Fabio\\Desktop\\ProyectoSoftwareMec\\src\\py\\edu\\facitec\\mec\\view\\mov\\report\\ReporteMovimiento.jasper");
+            JasperReport informe = (JasperReport)JRLoader.loadObject("ReporteMovimiento.jasper");
+//            JasperReport informe = (JasperReport)JRLoader.loadObject("C:\\Users\\Jorge Fabio\\Desktop\\ProyectoSoftwareMec\\src\\py\\edu\\facitec\\mec\\view\\mov\\report\\ReporteMovimiento.jasper");
             Map parametro = new HashMap();
             
             
@@ -423,5 +576,45 @@ public class FormInformeServicios extends javax.swing.JFrame {
             Logger.getLogger(FormInformeServicios.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+        private void moverConEnter(java.awt.event.KeyEvent evt, JComponent source) {
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            source.requestFocus();
+        }
+    }
+    
+    private void hacerClicConEnter(java.awt.event.KeyEvent evt, JButton buttom){
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER) {
+            buttom.doClick();
+        }
+    }
+    
+    public static final void soloNumeros(JTextField a){
+        a.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyTyped(KeyEvent e){
+                char c = e.getKeyChar();
+                if(Character.isLetter(c)){
+//                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+    }
+
+    private void limpiar() {
+        //ciclo para limpiar la tabla
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+           modelo.removeRow(i);
+           i-=1;
+        }
+        tfClienteDesde.requestFocus();
+        tfClienteDesde.setText("");
+        tfClienteHasta.setText("");
+        fechaDesde.setCalendar(hoy);
+        fechaHasta.setCalendar(hoy);
+        jrFecha.setSelected(true);
+        jTabbedPane4.setSelectedIndex(0);
     }
 }

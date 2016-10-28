@@ -17,7 +17,7 @@ import py.edu.facitec.mec.util.ConexionManager;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public class CiudadDaoImp implements CiudadDao{
     

@@ -17,7 +17,7 @@ import py.edu.facitec.mec.util.ConexionManager;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public class MantenimientoDaoImpl implements MantenimientoDao{
     
@@ -146,6 +146,7 @@ public class MantenimientoDaoImpl implements MantenimientoDao{
             + "FROM \"public\".\"clientes\" clientes INNER JOIN \"public\".\"mantenimiento\" mantenimiento ON clientes.\"codigo\" = mantenimiento.\"cliente_codigo\" "
             + "WHERE fecha BETWEEN '"+fecha1+"' AND '"+fecha2+"' AND "
             + "cliente_codigo BETWEEN "+cod1+" AND "+cod2+" "
+            + "AND situacion = 'Activo' "
             + "ORDER BY "+orden+";";    
 
     List<Mantenimiento> lista = new ArrayList<>();

@@ -11,7 +11,7 @@ import py.edu.facitec.mec.model.Mantenimiento;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public interface MantenimientoDao {
     void guardar(Mantenimiento mantenimiento);

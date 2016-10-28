@@ -7,7 +7,8 @@ package py.edu.facitec.mec.view.mov.report;
 
 /**
  *
- * @author Jorge Fabio
+ * @author: Jorge Fabio
+ * 
  */
 public class MantenimientoReport {
     private String movimiento;

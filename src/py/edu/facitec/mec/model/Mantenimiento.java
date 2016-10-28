@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public class Mantenimiento {
     private int codigo;

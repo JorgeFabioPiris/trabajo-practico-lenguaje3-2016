@@ -30,7 +30,8 @@ import static py.edu.facitec.mec.view.mov.FormMovimiento.servCodigo;
 
 /**
  *
- * @author Jorge Fabio
+ * @author: Parte grafica: Rosalino Cabral 
+ * Logica de programacion: Jorge Fabio
  */
 public class FormMovimiento extends javax.swing.JFrame {
 

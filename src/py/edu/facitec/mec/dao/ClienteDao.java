@@ -10,7 +10,7 @@ import py.edu.facitec.mec.model.Cliente;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public interface ClienteDao {
     void guardar(Cliente cliente);

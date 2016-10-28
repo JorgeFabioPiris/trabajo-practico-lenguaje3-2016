@@ -7,7 +7,7 @@ package py.edu.facitec.mec.model;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public class Servicio {
     

@@ -20,7 +20,8 @@ import static py.edu.facitec.mec.view.abm.FormCiudad.soloNumeros;
 
 /**
  *
- * @author Jorge Fabio
+ * @author: Parte grafica: Rosalino Cabral 
+ * Logica de programacion: Jorge Fabio
  */
 public class FormServicios extends javax.swing.JFrame {
 

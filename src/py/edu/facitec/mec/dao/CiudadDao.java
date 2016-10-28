@@ -11,7 +11,7 @@ import py.edu.facitec.mec.model.Ciudad;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public interface CiudadDao {
     void guardar(Ciudad ciudad);

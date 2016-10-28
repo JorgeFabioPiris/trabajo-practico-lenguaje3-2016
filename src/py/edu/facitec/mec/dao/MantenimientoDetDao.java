@@ -6,12 +6,11 @@
 package py.edu.facitec.mec.dao;
 
 import java.util.List;
-import py.edu.facitec.mec.model.Cliente;
 import py.edu.facitec.mec.model.MantenimientoDetalle;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public interface MantenimientoDetDao {
     void guardar(MantenimientoDetalle mantDet);

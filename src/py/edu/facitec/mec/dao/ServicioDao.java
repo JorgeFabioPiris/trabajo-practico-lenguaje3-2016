@@ -10,7 +10,7 @@ import py.edu.facitec.mec.model.Servicio;
 
 /**
  *
- * @author Jorge Fabio
+ * @author Rosalino Cabral
  */
 public interface ServicioDao {
     
