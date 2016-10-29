@@ -53,6 +53,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
 
@@ -209,11 +210,15 @@ public class FormPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Informes");
-        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+
+        jMenuItem7.setText("Informe de Movimientos");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu2ActionPerformed(evt);
+                jMenuItem7ActionPerformed(evt);
             }
         });
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
 
         jMenu4.setText("Ayuda");
@@ -328,11 +333,6 @@ public class FormPrincipal extends javax.swing.JFrame {
         servicio.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        FormInformeServicios info = new FormInformeServicios();
-        info.setVisible(true);
-    }//GEN-LAST:event_jMenu2ActionPerformed
-
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         salir();
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -341,6 +341,11 @@ public class FormPrincipal extends javax.swing.JFrame {
         Ayuda ayuda = new Ayuda(this, rootPaneCheckingEnabled);
         ayuda.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        FormInformeServicios info = new FormInformeServicios();
+        info.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -395,6 +400,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
 
     private void salir() {
