@@ -224,6 +224,11 @@ public class FormInformeServicios extends javax.swing.JFrame {
             }
         });
 
+        fechaHasta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fechaHastaFocusLost(evt);
+            }
+        });
         fechaHasta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 fechaHastaKeyPressed(evt);
@@ -380,8 +385,19 @@ public class FormInformeServicios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        cargarTabla();
-        jTabbedPane4.setSelectedIndex(1);
+        if (tfClienteDesde.getText().isEmpty()) {
+            tfClienteDesde.setText("1");
+            tfClienteHasta.setText("9999999");
+            cargarTabla();
+            jTabbedPane4.setSelectedIndex(1);
+        }else if(tfClienteHasta.getText().isEmpty()){
+            tfClienteHasta.setText("9999999");
+            cargarTabla();
+            jTabbedPane4.setSelectedIndex(1);
+        }else{
+            cargarTabla();
+            jTabbedPane4.setSelectedIndex(1);
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
@@ -460,6 +476,10 @@ public class FormInformeServicios extends javax.swing.JFrame {
     private void jrFechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jrFechaKeyPressed
         moverConEnter(evt, btnAceptar);
     }//GEN-LAST:event_jrFechaKeyPressed
+
+    private void fechaHastaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fechaHastaFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaHastaFocusLost
 
     /**
      * @param args the command line arguments
